@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wzh.paper.dao.RoleDAO">
+
+    <insert id="saveRole">
+        insert into role(name, description, update_date) values(#{name}, #{description}, CURTIME())
+    </insert>
+
+    <insert id="saveUsersByRole">
+        insert into user_role(user_id, role_id, update_date)
+        values
+        <foreach collection="users" item="user" separator=",">
+            (#{user.user_id}, #{role_id}, CURTIME())
+        </foreach>
+    </insert>
+
+</mapper>
