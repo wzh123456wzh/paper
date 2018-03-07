@@ -10,6 +10,7 @@ public class Role {
     private Date createDate;
     private Date updateDate;
     private List<User> users;
+    private List<Menu> menus;
 
 
     public long getRoleId() {
@@ -58,5 +59,13 @@ public class Role {
 
     public void setUsers(List<User> users) {
         this.users = users;
+    }
+
+    public List<Menu> getMenus() {
+        return menus;
+    }
+
+    public void setMenus(List<Menu> menus) {
+        this.menus = menus;
     }
 }

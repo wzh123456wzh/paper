@@ -1,14 +1,13 @@
 package com.wzh.paper.controller;
 
 import com.wzh.paper.entity.Result;
-import com.wzh.paper.entity.Role;
 import com.wzh.paper.entity.User;
 import com.wzh.paper.service.UserService;
+import com.wzh.paper.util.CurrentUserUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 @Controller
 @RequestMapping(value = "/user")
@@ -39,21 +38,25 @@ public class UserController {
     @ResponseBody
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public Result login(@RequestBody User user){
-        return userService.login(user);
+        Result<User> result = userService.login(user);
+        return result;
     }
 
+    //建立用户角色关系
     @ResponseBody
-    @RequestMapping(value = "/saveRolesByUser", method = RequestMethod.POST)
-    public Result saveRolesByUser(@RequestBody User user){
-        return userService.saveRolesByUser(user);
+    @RequestMapping(value = "/saveRolesUser", method = RequestMethod.POST)
+    public Result saveRolesUser(@RequestBody User user){
+        return userService.saveRolesUser(user);
     }
 
+    //列出此角色下的用户
     @ResponseBody
     @RequestMapping(value = "/listUsersByRole/{role_id}", method = RequestMethod.GET)
     public Result<User> listUsersByRole(@PathVariable("role_id") long roldId){
         return userService.listUsersByRole(roldId, true);
     }
 
+    //列出不是此角色下的用户
     @ResponseBody
     @RequestMapping(value = "/listUsersNotByRole/{role_id}", method = RequestMethod.GET)
     public Result<User> listUsersNotByRole(@PathVariable("role_id") long roldId){

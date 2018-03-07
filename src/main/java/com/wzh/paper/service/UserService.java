@@ -14,7 +14,7 @@ public interface UserService {
 
     Result<User> login(User user);
 
-    Result saveRolesByUser(User user);
+    Result saveRolesUser(User user);
 
     Result<User> listUsersByRole(long roleId, boolean flag);
 }

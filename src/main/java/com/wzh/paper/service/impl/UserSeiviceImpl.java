@@ -3,8 +3,11 @@ package com.wzh.paper.service.impl;
 import com.wzh.paper.dao.UserDAO;
 import com.wzh.paper.entity.Result;
 import com.wzh.paper.entity.Role;
+import com.wzh.paper.entity.TokenData;
 import com.wzh.paper.entity.User;
 import com.wzh.paper.service.UserService;
+import com.wzh.paper.util.CurrentUserUtil;
+import com.wzh.paper.util.JedisUtil;
 import org.springframework.stereotype.Service;
 import sun.misc.BASE64Encoder;
 
@@ -27,7 +30,7 @@ public class UserSeiviceImpl implements UserService{
     @Override
     public Result<User> register(User user) {
         User oldUser = userDAO.getUserByName(user.getNickname());
-        Result result = new Result();
+        Result result;
         if(oldUser != null){
             return new Result<User>(Result.FAIL_CODE, "昵称已存在");
         }
@@ -54,10 +57,10 @@ public class UserSeiviceImpl implements UserService{
 
     @Override
     public Result<User> login(User user) {
-        Result result = new Result();
+        Result result;
         try {
             String password = user.getPassword();
-            MessageDigest md = null;
+            MessageDigest md;
             md = MessageDigest.getInstance("md5");
             byte[] md5 = md.digest(password.getBytes());
             BASE64Encoder be = new BASE64Encoder();
@@ -65,7 +68,11 @@ public class UserSeiviceImpl implements UserService{
             user.setPassword(base64);
             User loginUser = userDAO.login(user);
             if(loginUser != null){
-                result = new Result(Result.SUCCESS_CODE, "登录成功");
+                String token = CurrentUserUtil.getToken(loginUser);
+                loginUser.setToken(token);
+                TokenData tokenData = userDAO.getTokenData(loginUser.getUserId());
+                JedisUtil.setTokenData(token, tokenData);
+                result = new Result(Result.SUCCESS_CODE, "登录成功", loginUser);
             } else {
                 result = new Result(Result.FAIL_CODE, "密码错误");
             }
@@ -77,10 +84,10 @@ public class UserSeiviceImpl implements UserService{
     }
 
     @Override
-    public Result saveRolesByUser(User user) {
-        Result result = new Result();
+    public Result saveRolesUser(User user) {
+        Result result;
         try {
-            userDAO.saveRolesByUser(user);
+            userDAO.saveRolesUser(user);
             result = new Result(Result.SUCCESS_CODE, "添加成功");
         } catch (Exception e) {
             result = new Result(Result.FAIL_CODE, "添加失败");
@@ -93,9 +100,9 @@ public class UserSeiviceImpl implements UserService{
     //flag = flase  列出非此角色的用户
     @Override
     public Result<User> listUsersByRole(long roleId, boolean flag) {
-        Result<User> result = new Result<>();
+        Result<User> result;
         try {
-            List<User> users = new ArrayList<>();
+            List<User> users;
             if(flag){
                 users = userDAO.listUsersByRole(roleId);
             } else {

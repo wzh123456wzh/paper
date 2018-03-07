@@ -7,12 +7,42 @@
         insert into role(name, description, update_date) values(#{name}, #{description}, CURTIME())
     </insert>
 
-    <insert id="saveUsersByRole">
+    <insert id="saveUsersRole">
         insert into user_role(user_id, role_id, update_date)
         values
         <foreach collection="users" item="user" separator=",">
             (#{user.user_id}, #{role_id}, CURTIME())
         </foreach>
     </insert>
+
+    <insert id="saveMenusRole">
+        insert into role_menu(role_id, menu_id, update_date)
+        values(#{role_id}, #{menu_id}, CURTIME())
+    </insert>
+
+    <select id="listRolesByUser">
+        select r.roleId, r.name, r.description
+        from role r left join user_role ur on r.role_id = ur.role_id
+        where ur.user_id = #{userId}
+    </select>
+
+    <select id="listRolesNotByUser">
+        select r.roleId, r.name, r.description
+        from role r left join user_role ur on r.role_id = ur.role_id
+        where ur.user_id != #{userId}
+    </select>
+
+    <select id="listRolesByMenu">
+        select r.roleId, r.name, r.description
+        from role r left join role_menu rm on r.role_id = rm.role_id
+        where rm.menu_id = #{menuId}
+  </select>
+
+    <select id="listRolesNotByMenu">
+        select r.roleId, r.name, r.description
+        from role r left join role_menu rm on r.role_id = rm.role_id
+        where rm.menu_id != #{menuId}
+    </select>
+
 
 </mapper>

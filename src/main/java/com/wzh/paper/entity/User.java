@@ -9,6 +9,7 @@ public class User {
     private String password;
     private Date createDate;
     private Date updateDate;
+    private String token;
     private List<Role> roles;
 
     public long getUserId() {
@@ -57,5 +58,13 @@ public class User {
 
     public void setRoles(List<Role> roles) {
         this.roles = roles;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

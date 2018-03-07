@@ -19,7 +19,7 @@
         select user_id, nickname from user where nickname = #{nickname} and password = #{password}
     </select>
 
-    <insert id="saveRolesByUser">
+    <insert id="saveRolesUser">
         insert into user_role(user_id, role_id, update_date)
         values
         <foreach collection="roles" item="role" separator=",">
@@ -37,5 +37,12 @@
         select u.user_id, u.nickname
         from user u left join user_role ur on u.user_id = ur.user_id
         where ur.role_id != #{roleId}
+    </select>
+
+    <select id="getTokenData" resultType="TokenData">
+        select u.user_id, GROUP_CONCAT(ur.role_id) roleIds, u.nickname
+        from user u left join user_role ur on u.user_id = ur.user_id
+        where u.user_id = #{userId}
+        group by u.user_id
     </select>
 </mapper>

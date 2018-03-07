@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wzh.paper.dao.MenuDAO">
+
+    <insert id="createMenu">
+        insert into menu(parent_id, level, menu_name) value(#{parentId}, #{level}, #{menuName})
+    </insert>
+
+</mapper>
