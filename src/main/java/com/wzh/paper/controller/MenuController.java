@@ -1,11 +1,13 @@
 package com.wzh.paper.controller;
 
+import com.wzh.paper.dto.UserMenu;
 import com.wzh.paper.entity.Menu;
 import com.wzh.paper.entity.Result;
 import com.wzh.paper.service.MenuService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -20,7 +22,7 @@ public class MenuController {
 
     //添加菜单
     @ResponseBody
-    @RequestMapping("/createMenu")
+    @RequestMapping(value = "/createMenu", method = RequestMethod.POST)
     public Result createMenu(@RequestBody Menu menu){
         Result result;
         if(menu.getMenuName().length() > 50){
@@ -30,7 +32,21 @@ public class MenuController {
         return result;
     }
 
-//    public Result<List<Menu>> listMenus(){
-//
-//    }
+    //按照父菜单获得下一集菜单
+    @ResponseBody
+    @RequestMapping(value = "/listMenusByParent", method = RequestMethod.POST)
+    public Result<List<Menu>> listMenusByParent(@RequestBody UserMenu userMenu){
+        Result<List<Menu>> result;
+        result = menuService.listMenusByParent(userMenu);
+        return result;
+    }
+
+    //按照父菜单获得下一集菜单
+    @ResponseBody
+    @RequestMapping(value = "/listMenus", method = RequestMethod.POST)
+    public Result<List<Menu>> listMenus(@RequestBody UserMenu userMenu){
+        Result<List<Menu>> result;
+        result = menuService.listMenus(userMenu);
+        return result;
+    }
 }

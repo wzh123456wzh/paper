@@ -23,7 +23,7 @@
         insert into user_role(user_id, role_id, update_date)
         values
         <foreach collection="roles" item="role" separator=",">
-            (#{user_id}, #{role.role_id}, CURTIME())
+            (#{user_id}, #{role.roleId}, CURTIME())
         </foreach>
     </insert>
 

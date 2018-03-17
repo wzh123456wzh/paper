@@ -11,13 +11,13 @@
         insert into user_role(user_id, role_id, update_date)
         values
         <foreach collection="users" item="user" separator=",">
-            (#{user.user_id}, #{role_id}, CURTIME())
+            (#{user.userId}, #{roleId}, CURTIME())
         </foreach>
     </insert>
 
     <insert id="saveMenusRole">
         insert into role_menu(role_id, menu_id, update_date)
-        values(#{role_id}, #{menu_id}, CURTIME())
+        values(#{roleId}, #{menuId}, CURTIME())
     </insert>
 
     <select id="listRolesByUser">
