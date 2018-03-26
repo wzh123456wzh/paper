@@ -17,6 +17,28 @@
             </if>
     </select>
 
+    <select id="listStockByChart" resultType="StockInfo">
+        select inf.last_trade, inf.stock_date
+        from stock_name idx left join stock_info inf on idx.symbol = inf.symbol
+        where idx.symbol = #{symbol}
+    </select>
 
+    <select id="listStockName" resultType="StockInfo">
+        select concat(stock_name, '(', symbol, ')') value, symbol, stock_name
+        from stock_name
+        where 1=1 and stock_name  != ''
+        <if test="keyword != null and keyword != ''">
+            and symbol regexp #{keyword} or stock_name regexp #{keyword}
+        </if>
+        order by stock_name
+        limit 0, 20
+    </select>
 
+    <select id="getDetailBySymbol" resultType="StockInfo">
+        select symbol, company_name, launch_date, reg_add, reg_cap, regin, regin, stock_name
+        from stock_info
+        where symbol = #{symbol}
+        order by stock_date DESC
+        limit 0, 1
+    </select>
 </mapper>
