@@ -16,5 +16,5 @@ public interface StockService {
 
     Result<List<StockInfo>> listStockName(StockDTO dto);
 
-    Result<StockInfo> selectDetailBySymbol(StockDTO dto);
+    Result<StockInfo> getSymbolLastInfo(StockDTO dto);
 }

@@ -31,7 +31,6 @@
             and symbol REGEXP #{keyword} or stock_name REGEXP #{keyword}
         </if>
         order by stock_name
-        limit 0, 20
     </select>
 
     <select id="getSymbolLastInfo" resultType="StockInfo">

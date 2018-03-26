@@ -45,9 +45,9 @@ public class StockController {
 
     //根据股票代码，查询股票详细信息
     @ResponseBody
-    @RequestMapping(value = "/selectDetailBySymbol", method = RequestMethod.POST)
-    public Result<StockInfo> selectDetailBySymbol(@RequestBody StockDTO dto){
-        return stockService.selectDetailBySymbol(dto);
+    @RequestMapping(value = "/getSymbolLastInfo", method = RequestMethod.POST)
+    public Result<StockInfo> getSymbolLastInfo(@RequestBody StockDTO dto){
+        return stockService.getSymbolLastInfo(dto);
     }
 
 }

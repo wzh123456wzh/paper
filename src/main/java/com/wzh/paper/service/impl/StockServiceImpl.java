@@ -54,8 +54,6 @@ public class StockServiceImpl implements StockService {
     public Result<List<StockInfo>> listStockName(StockDTO dto) {
         Result<List<StockInfo>> result;
         try {
-            dto.setSymbol("#"+dto.getSymbol()+"#");
-            dto.setStockName("#"+dto.getStockName()+"#");
             List<StockInfo> stockInfoList = stockDAO.listStockName(dto);
             result = new Result<>(Result.getSuccessCode(), "数据查询成功", stockInfoList);
         } catch (Exception e) {
@@ -66,10 +64,10 @@ public class StockServiceImpl implements StockService {
     }
 
     @Override
-    public Result<StockInfo> selectDetailBySymbol(StockDTO dto) {
+    public Result<StockInfo> getSymbolLastInfo(StockDTO dto) {
         Result<StockInfo> result;
         try {
-            StockInfo stockInfoList = stockDAO.getDetailBySymbol(dto);
+            StockInfo stockInfoList = stockDAO.getSymbolLastInfo(dto);
             result = new Result<>(Result.getSuccessCode(), "数据查询成功", stockInfoList);
         } catch (Exception e) {
             result = new Result<>(Result.getFailCode(), "数据查询失败");

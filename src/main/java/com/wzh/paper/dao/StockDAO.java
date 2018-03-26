@@ -16,5 +16,5 @@ public interface StockDAO {
 
     List<StockInfo> listStockName(StockDTO dto);
 
-    StockInfo getDetailBySymbol(StockDTO dto);
+    StockInfo getSymbolLastInfo(StockDTO dto);
 }
