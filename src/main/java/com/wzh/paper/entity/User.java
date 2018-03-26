@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 public class User {
-    private long userId;
+    private Long userId;
     private String nickname;
     private String password;
     private Date createDate;

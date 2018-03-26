@@ -22,11 +22,11 @@ public class UserController {
     public Result register(@RequestBody User user){
         String regex = "^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]$";
         if(user.getNickname().length() > 10){
-            return new Result(Result.FAIL_CODE, "昵称必须少于10个字符");
+            return new Result(Result.FAIL_CODE,  "昵称必须少于10个字符");
         }
-        if(user.getPassword().length() < 6 || user.getPassword().length() > 16){
-            return new Result(Result.FAIL_CODE, "密码必须在6到16个字符之间 ");
-        }
+//        if(user.getPassword().length() < 6 || user.getPassword().length() > 16){
+//            return new Result(Result.FAIL_CODE, "密码必须在6到16个字符之间 ");
+//        }
 
         if(user.getPassword().matches(regex)){
             return new Result(Result.FAIL_CODE, "不能全是数字或字母");
@@ -61,5 +61,12 @@ public class UserController {
     @RequestMapping(value = "/listUsersNotByRole/{role_id}", method = RequestMethod.GET)
     public Result<User> listUsersNotByRole(@PathVariable("role_id") long roldId){
         return userService.listUsersByRole(roldId, false);
+    }
+
+    //根据用户名查询用户详细信息
+    @ResponseBody
+    @RequestMapping(value = "/getUserInfo", method = RequestMethod.POST)
+    public Result<User> getUserInfo(@RequestBody User user){
+        return userService.getUserInfo(user);
     }
 }

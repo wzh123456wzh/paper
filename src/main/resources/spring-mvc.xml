@@ -14,7 +14,7 @@
     <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/*/**"/>
-            <bean class="com.wzh.paper.interceptor.DomainFilter"></bean>
+            <bean class="com.wzh.paper.interceptor.DomainInterceptor"></bean>
         </mvc:interceptor>
     </mvc:interceptors>
     

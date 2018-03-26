@@ -11,4 +11,10 @@ import java.util.List;
 public interface StockDAO {
 
     List<StockInfo> listStockInfo(StockDTO dto);
+
+    List<StockInfo> listStockByChart(StockDTO dto);
+
+    List<StockInfo> listStockName(StockDTO dto);
+
+    StockInfo getDetailBySymbol(StockDTO dto);
 }

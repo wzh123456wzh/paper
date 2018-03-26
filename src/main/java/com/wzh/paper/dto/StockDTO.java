@@ -3,8 +3,20 @@ package com.wzh.paper.dto;
 public class StockDTO {
     private String startDate;
     private String endDate;
-    private Integer currentPage;
-    private Integer pageItems;
+    private Integer pageNum;
+    private Integer pageSize;
+    private String symbol;
+    private String stockName;
+    private String keyword;
+
+
+    public String getKeyword() {
+        return keyword;
+    }
+
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
+    }
 
     public String getStartDate() {
         return startDate;
@@ -22,19 +34,35 @@ public class StockDTO {
         this.endDate = endDate;
     }
 
-    public Integer getCurrentPage() {
-        return currentPage;
+    public Integer getPageNum() {
+        return pageNum;
     }
 
-    public void setCurrentPage(Integer currentPage) {
-        this.currentPage = currentPage;
+    public void setPageNum(Integer pageNum) {
+        this.pageNum = pageNum;
     }
 
-    public Integer getPageItems() {
-        return pageItems;
+    public Integer getPageSize() {
+        return pageSize;
     }
 
-    public void setPageItems(Integer pageItems) {
-        this.pageItems = pageItems;
+    public void setPageSize(Integer pageSize) {
+        this.pageSize = pageSize;
+    }
+
+    public String getSymbol() {
+        return symbol;
+    }
+
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
+    }
+
+    public String getStockName() {
+        return stockName;
+    }
+
+    public void setStockName(String stockName) {
+        this.stockName = stockName;
     }
 }

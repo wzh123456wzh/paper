@@ -11,4 +11,10 @@ import java.util.List;
 
 public interface StockService {
     Result<PageInfo<List<StockInfo>>> listStockInfo(StockDTO dto);
+
+    Result<List<StockInfo>> listStockByChart(StockDTO dto);
+
+    Result<List<StockInfo>> listStockName(StockDTO dto);
+
+    Result<StockInfo> selectDetailBySymbol(StockDTO dto);
 }

@@ -1,28 +1,29 @@
 package com.wzh.paper.entity;
 
-import java.util.Date;
+import java.util.*;
 
 public class StockInfo {
-    private int symbol;   	             //代码,
+    private String symbol;   	             //代码,
     private String stockName;              	 //简称,
-    private double lastTrade;        	 //最新价,
-    private double chg;               	 //涨跌幅,
-    private double stockChange;                //涨跌额,
-    private double fiveMinCg;      	 //5分钟涨跌幅,
-    private double volume;            	 //成交量(手),
-    private double turnover;          	 //成交额（万元),
-    private double turnoverRate;     	 //换手率,
-    private double swing;             	 //振幅,
-    private double qrr;               	 //量比,
-    private double theCommittee;     	 //委比,
-    private double peratio; 			 //市盈率
+    private Double lastTrade;        	 //最新价,
+    private Double chg;               	 //涨跌幅,
+    private Double stockChange;                //涨跌额,
+    private Double fiveMinCg;      	 //5分钟涨跌幅,
+    private Double volume;            	 //成交量(手),
+    private Double turnover;          	 //成交额（万元),
+    private Double turnoverRate;     	 //换手率,
+    private Double swing;             	 //振幅,
+    private Double qrr;               	 //量比,
+    private Double theCommittee;     	 //委比,
+    private Double peratio; 			 //市盈率
     private String stockDate;               //数据产生的时间
+    private String value;               //扩展参数
 
-    public int getSymbol() {
+    public String getSymbol() {
         return symbol;
     }
 
-    public void setSymbol(int symbol) {
+    public void setSymbol(String symbol) {
         this.symbol = symbol;
     }
 
@@ -34,91 +35,91 @@ public class StockInfo {
         this.stockName = stockName;
     }
 
-    public double getLastTrade() {
+    public Double getLastTrade() {
         return lastTrade;
     }
 
-    public void setLastTrade(double lastTrade) {
+    public void setLastTrade(Double lastTrade) {
         this.lastTrade = lastTrade;
     }
 
-    public double getChg() {
+    public Double getChg() {
         return chg;
     }
 
-    public void setChg(double chg) {
+    public void setChg(Double chg) {
         this.chg = chg;
     }
 
-    public double getStockChange() {
+    public Double getStockChange() {
         return stockChange;
     }
 
-    public void setStockChange(double stockChange) {
+    public void setStockChange(Double stockChange) {
         this.stockChange = stockChange;
     }
 
-    public double getFiveMinCg() {
+    public Double getFiveMinCg() {
         return fiveMinCg;
     }
 
-    public void setFiveMinCg(double fiveMinCg) {
+    public void setFiveMinCg(Double fiveMinCg) {
         this.fiveMinCg = fiveMinCg;
     }
 
-    public double getVolume() {
+    public Double getVolume() {
         return volume;
     }
 
-    public void setVolume(double volume) {
+    public void setVolume(Double volume) {
         this.volume = volume;
     }
 
-    public double getTurnover() {
+    public Double getTurnover() {
         return turnover;
     }
 
-    public void setTurnover(double turnover) {
+    public void setTurnover(Double turnover) {
         this.turnover = turnover;
     }
 
-    public double getTurnoverRate() {
+    public Double getTurnoverRate() {
         return turnoverRate;
     }
 
-    public void setTurnoverRate(double turnoverRate) {
+    public void setTurnoverRate(Double turnoverRate) {
         this.turnoverRate = turnoverRate;
     }
 
-    public double getSwing() {
+    public Double getSwing() {
         return swing;
     }
 
-    public void setSwing(double swing) {
+    public void setSwing(Double swing) {
         this.swing = swing;
     }
 
-    public double getQrr() {
+    public Double getQrr() {
         return qrr;
     }
 
-    public void setQrr(double qrr) {
+    public void setQrr(Double qrr) {
         this.qrr = qrr;
     }
 
-    public double getTheCommittee() {
+    public Double getTheCommittee() {
         return theCommittee;
     }
 
-    public void setTheCommittee(double theCommittee) {
+    public void setTheCommittee(Double theCommittee) {
         this.theCommittee = theCommittee;
     }
 
-    public double getPeratio() {
+    public Double getPeratio() {
         return peratio;
     }
 
-    public void setPeratio(double peratio) {
+    public void setPeratio(Double peratio) {
         this.peratio = peratio;
     }
 
@@ -128,5 +129,13 @@ public class StockInfo {
 
     public void setStockDate(String stockDate) {
         this.stockDate = stockDate;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
     }
 }

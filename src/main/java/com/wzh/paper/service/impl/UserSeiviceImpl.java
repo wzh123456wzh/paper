@@ -59,25 +59,30 @@ public class UserSeiviceImpl implements UserService{
     public Result<User> login(User user) {
         Result result;
         try {
-            String password = user.getPassword();
-            MessageDigest md;
-            md = MessageDigest.getInstance("md5");
-            byte[] md5 = md.digest(password.getBytes());
-            BASE64Encoder be = new BASE64Encoder();
-            String base64 = be.encode(md5);
-            user.setPassword(base64);
-            User loginUser = userDAO.login(user);
-            if(loginUser != null){
-                String token = CurrentUserUtil.getToken(loginUser);
-                loginUser.setToken(token);
-                TokenData tokenData = userDAO.getTokenData(loginUser.getUserId());
-                JedisUtil.setTokenData(token, tokenData);
-                result = new Result(Result.SUCCESS_CODE, "登录成功", loginUser);
+            User userIsExist = userDAO.getUserByName(user.getNickname());
+            if(userIsExist == null){
+                result = new Result(2, "用户不存在");
             } else {
-                result = new Result(Result.FAIL_CODE, "密码错误");
+                String password = user.getPassword();
+                MessageDigest md;
+                md = MessageDigest.getInstance("md5");
+                byte[] md5 = md.digest(password.getBytes());
+                BASE64Encoder be = new BASE64Encoder();
+                String base64 = be.encode(md5);
+                user.setPassword(base64);
+                User loginUser = userDAO.login(user);
+                if (loginUser != null) {
+                    String token = CurrentUserUtil.getToken(loginUser);
+                    loginUser.setToken(token);
+                    TokenData tokenData = userDAO.getTokenData(loginUser.getUserId());
+//                    JedisUtil.setTokenData(token, tokenData);
+                    result = new Result(Result.SUCCESS_CODE, "登录成功", loginUser);
+                } else {
+                    result = new Result(0, "密码错误");
+                }
             }
         } catch (NoSuchAlgorithmException e) {
-            result = new Result(Result.SUCCESS_CODE, "登录失败");
+            result = new Result(Result.FAIL_CODE, "登录失败");
             e.printStackTrace();
         }
         return result;
@@ -113,6 +118,19 @@ public class UserSeiviceImpl implements UserService{
             } else {
                 result = new Result(Result.SUCCESS_CODE, "查询成功", users);
             }
+        } catch (Exception e) {
+            result = new Result(Result.FAIL_CODE, "查询失败");
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    @Override
+    public Result<User> getUserInfo(User user) {
+        Result result;
+        try {
+            User use = userDAO.getUserByName(user.getNickname());
+            result = new Result(Result.SUCCESS_CODE, "查询成功", use);
         } catch (Exception e) {
             result = new Result(Result.FAIL_CODE, "查询失败");
             e.printStackTrace();
