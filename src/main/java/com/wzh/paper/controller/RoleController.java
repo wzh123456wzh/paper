@@ -49,27 +49,27 @@ public class RoleController {
     @ResponseBody
     @RequestMapping(value = "/listRolesByUser", method = RequestMethod.POST)
     public Result listRolesByUser(@RequestBody User user){
-        return roleService.listRolesUser(user, true);
+        return roleService.listRolesUserSelect(user, true);
     }
 
     //列出不是某用户下的角色
     @ResponseBody
     @RequestMapping(value = "/listRolesNotByUser", method = RequestMethod.POST)
     public Result listRolesNotByUser(@RequestBody User user){
-        return roleService.listRolesUser(user, false);
+        return roleService.listRolesUserSelect(user, false);
     }
 
     //列出是某菜单下的角色
     @ResponseBody
     @RequestMapping(value = "/listRolesByMenu", method = RequestMethod.POST)
     public Result listRolesByMenu(@RequestBody Menu menu){
-        return roleService.listRolesMenu(menu, true);
+        return roleService.listRolesMenuSelect(menu, true);
     }
 
     //列出不是某菜单下的角色
     @ResponseBody
     @RequestMapping(value = "/listRolesNotByMenu", method = RequestMethod.POST)
     public Result listRolesNotByMenu(@RequestBody Menu menu){
-        return roleService.listRolesMenu(menu, false);
+        return roleService.listRolesMenuSelect(menu, false);
     }
 }

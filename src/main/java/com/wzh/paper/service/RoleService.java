@@ -12,7 +12,7 @@ public interface RoleService {
 
     Result saveMenusRole(Role role);
 
-    Result listRolesUser(User user, boolean flag);
+    Result listRolesUserSelect(User user, boolean flag);
 
-    Result listRolesMenu(Menu menu, boolean flag);
+    Result listRolesMenuSelect(Menu menu, boolean flag);
 }

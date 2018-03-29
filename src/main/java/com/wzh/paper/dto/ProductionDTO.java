@@ -1,11 +1,16 @@
-package com.wzh.paper.entity;
+package com.wzh.paper.dto;
+
+import com.wzh.paper.entity.Menu;
+import com.wzh.paper.entity.User;
 
 import java.util.List;
 
-public class Production {
+public class ProductionDTO {
     private Long production_id;
     private String productionName;
+    private Integer empiryDate;
     private List<Menu> menus;
+    private List<User> users;
 
     public Long getProduction_id() {
         return production_id;
@@ -29,5 +34,21 @@ public class Production {
 
     public void setMenus(List<Menu> menus) {
         this.menus = menus;
+    }
+
+    public Integer getEmpiryDate() {
+        return empiryDate;
+    }
+
+    public void setEmpiryDate(Integer empiryDate) {
+        this.empiryDate = empiryDate;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 }

@@ -4,44 +4,44 @@
 <mapper namespace="com.wzh.paper.dao.RoleDAO">
 
     <insert id="saveRole">
-        insert into role(name, description, update_date) values(#{name}, #{description}, CURTIME())
+        insert into role(name, description) values(#{name}, #{description})
     </insert>
 
     <insert id="saveUsersRole">
-        insert into user_role(user_id, role_id, update_date)
+        insert into user_role(user_id, role_id)
         values
         <foreach collection="users" item="user" separator=",">
-            (#{user.userId}, #{roleId}, CURTIME())
+            (#{user.userId}, #{roleId})
         </foreach>
     </insert>
 
     <insert id="saveMenusRole">
-        insert into role_menu(role_id, menu_id, update_date)
-        values(#{roleId}, #{menuId}, CURTIME())
+        insert into role_menu(role_id, menu_id)
+        values(#{roleId}, #{menuId})
     </insert>
 
-    <select id="listRolesByUser">
-        select r.roleId, r.name, r.description
+    <select id="listRolesByUser" resultType="Role">
+        select r.role_id, r.name, r.description
         from role r left join user_role ur on r.role_id = ur.role_id
         where ur.user_id = #{userId}
     </select>
 
-    <select id="listRolesNotByUser">
-        select r.roleId, r.name, r.description
+    <select id="listRolesNotByUser" resultType="Role">
+        select r.role_id, r.name, r.description
         from role r left join user_role ur on r.role_id = ur.role_id
         where ur.user_id != #{userId}
     </select>
 
-    <select id="listRolesByMenu">
-        select r.roleId, r.name, r.description
+    <select id="listRolesByMenu" resultType="Role">
+        select r.role_id, r.name, r.description
         from role r left join role_menu rm on r.role_id = rm.role_id
         where rm.menu_id = #{menuId}
   </select>
 
-    <select id="listRolesNotByMenu">
-        select r.roleId, r.name, r.description
+    <select id="listRolesNotByMenu" resultType="Role">
+        select r.role_id, r.name, r.description
         from role r left join role_menu rm on r.role_id = rm.role_id
-        where rm.menu_id != #{menuId}
+        where rm.menu_id != #{menuId} or rm.menu_id is null
     </select>
 
 

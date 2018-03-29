@@ -20,39 +20,30 @@ public class MenuServiceImpl implements MenuService {
     private MenuDAO menuDAO;
 
     @Override
-    public Result createMenu(Menu menu) {
-        Result result;
-        try{
+    public Result saveMenu(Menu menu) {
+//        Result result;
+//        try{
             Menu parentMenu = menuDAO.findMenu(menu.getParentId());
             long nextPrimaryKey = menuDAO.findNextPrimaryKey();
             menu.setFullPath(parentMenu.getFullPath() + "-" + nextPrimaryKey);
             menu.setMenuId(nextPrimaryKey);
             menuDAO.createMenu(menu);
-            result = new Result(Result.SUCCESS_CODE, "菜单添加成功");
-        }catch (Exception e){
-            result = new Result(Result.FAIL_CODE, "菜单添加失败");
-            e.printStackTrace();
-        }
-        return result;
+//            result = new Result(Result.SUCCESS_CODE, "菜单添加成功");
+//        }catch (Exception e){
+//            result = new Result(Result.FAIL_CODE, "菜单添加失败");
+//            e.printStackTrace();
+//        }
+        return new Result();
     }
 
     @Override
-    public Result<List<Menu>> listMenusByParent(UserMenu userMenu) {
-        Result<List<Menu>> result;
-        try{
-            List<Menu> menus = menuDAO.listMenus(userMenu);
-            result = new Result(Result.SUCCESS_CODE, "菜单查询成功", menus);
-        }catch (Exception e){
-            result = new Result(Result.FAIL_CODE, "菜单查询失败");
-            e.printStackTrace();
-        }
-        return result;
+    public Result<List<Menu>> listMenusByParentSelect(UserMenu userMenu) {
+        List<Menu> menus = menuDAO.listMenus(userMenu);
+        return new Result<List<Menu>>(menus);
     }
 
     @Override
-    public Result<List<Menu>> listMenus(UserMenu userMenu) {
-        Result<List<Menu>> result;
-        try{
+    public Result<List<Menu>> listMenusSelect(UserMenu userMenu) {
             List<Menu> tmpList = menuDAO.listMenus(userMenu);
             List<Menu> resultList = new ArrayList<>(10);
             //查询full_path长度为5的第一个元素(第二级菜单)
@@ -82,12 +73,7 @@ public class MenuServiceImpl implements MenuService {
             for(int i = secondMenuIndex - 1; i >= 0 ; i--){
                 resultList.add(tmpList.get(i));
             }
-            result = new Result(Result.SUCCESS_CODE, "菜单查询成功", resultList);
-        }catch (Exception e){
-            result = new Result(Result.FAIL_CODE, "菜单查询失败");
-            e.printStackTrace();
-        }
-        return result;
+        return new Result<>(resultList);
     }
 
 

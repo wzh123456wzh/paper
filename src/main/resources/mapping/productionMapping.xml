@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.wzh.paper.dao.MenuDAO">
+<mapper namespace="com.wzh.paper.dao.ProductionDAO">
 
+    <insert id="saveProduction">
+        insert into production(production_name) value (#{productionName})
+    </insert>
+
+    <insert id="savaProductionMenu">
+        insert into production_menu(production_id, menu_id) value (#{productionId}, #{menuId})
+    </insert>
 
 </mapper>
