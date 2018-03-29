@@ -36,7 +36,7 @@
     <select id="listUsersNotByRole" resultType="User">
         select u.user_id, u.nickname
         from user u left join user_role ur on u.user_id = ur.user_id
-        where ur.role_id != #{roleId}
+        where ur.role_id != #{roleId} or ur.role_id is null
     </select>
 
     <select id="getTokenData" resultType="TokenData">

@@ -90,51 +90,54 @@ public class UserSeiviceImpl implements UserService{
 
     @Override
     public Result saveRolesUser(User user) {
-        Result result;
-        try {
+//        Result result;
+//        try {
             userDAO.saveRolesUser(user);
-            result = new Result(Result.SUCCESS_CODE, "添加成功");
-        } catch (Exception e) {
-            result = new Result(Result.FAIL_CODE, "添加失败");
-            e.printStackTrace();
-        }
-        return result;
+//            result = new Result(Result.SUCCESS_CODE, "添加成功");
+//        } catch (Exception e) {
+//            result = new Result(Result.FAIL_CODE, "添加失败");
+//            e.printStackTrace();
+//        }
+        return new Result();
     }
 
     //flag = true   列出此角色的用户
     //flag = flase  列出非此角色的用户
     @Override
-    public Result<User> listUsersByRole(long roleId, boolean flag) {
-        Result<User> result;
-        try {
+    public Result<User> listUsersByRoleSelect(long roleId, boolean flag) {
+//        Result<User> result;
+//        try {
             List<User> users;
             if(flag){
                 users = userDAO.listUsersByRole(roleId);
             } else {
                 users = userDAO.listUsersNotByRole(roleId);
             }
-            if(users.size() == 0){
-                result = new Result(Result.SUCCESS_CODE, "暂时没有用户是此角色", null);
-            } else {
-                result = new Result(Result.SUCCESS_CODE, "查询成功", users);
-            }
-        } catch (Exception e) {
-            result = new Result(Result.FAIL_CODE, "查询失败");
-            e.printStackTrace();
+//            if(users.size() == 0){
+//                result = new Result(Result.SUCCESS_CODE, "暂时没有用户是此角色", null);
+//            } else {
+//                result = new Result(Result.SUCCESS_CODE, "查询成功", users);
+//            }
+//        } catch (Exception e) {
+//            result = new Result(Result.FAIL_CODE, "查询失败");
+//            e.printStackTrace();
+//        }
+        if(users.size() == 0){
+                users = null;
         }
-        return result;
+        return new Result(users);
     }
 
     @Override
-    public Result<User> getUserInfo(User user) {
-        Result result;
-        try {
+    public Result<User> getUserInfoSelect(User user) {
+//        Result result;
+//        try {
             User use = userDAO.getUserByName(user.getNickname());
-            result = new Result(Result.SUCCESS_CODE, "查询成功", use);
-        } catch (Exception e) {
-            result = new Result(Result.FAIL_CODE, "查询失败");
-            e.printStackTrace();
-        }
-        return result;
+//            result = new Result(Result.SUCCESS_CODE, "查询成功", use);
+//        } catch (Exception e) {
+//            result = new Result(Result.FAIL_CODE, "查询失败");
+//            e.printStackTrace();
+//        }
+        return new Result(use);
     }
 }

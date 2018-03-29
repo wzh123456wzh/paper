@@ -23,30 +23,27 @@ public class MenuController {
     //添加菜单
     @ResponseBody
     @RequestMapping(value = "/createMenu", method = RequestMethod.POST)
-    public Result createMenu(@RequestBody Menu menu){
+    public Result saveMenu(@RequestBody Menu menu){
         Result result;
         if(menu.getMenuName().length() > 50){
             result = new Result(Result.FAIL_CODE, "菜单名称不能大于50个字符");
         }
-        result = menuService.createMenu(menu);
-        return result;
+        return menuService.saveMenu(menu);
     }
 
     //按照父菜单获得下一集菜单
     @ResponseBody
     @RequestMapping(value = "/listMenusByParent", method = RequestMethod.POST)
-    public Result<List<Menu>> listMenusByParent(@RequestBody UserMenu userMenu){
+    public Result<List<Menu>> listMenusByParentSelect(@RequestBody UserMenu userMenu){
         Result<List<Menu>> result;
-        result = menuService.listMenusByParent(userMenu);
-        return result;
+        return menuService.listMenusByParentSelect(userMenu);
     }
 
-    //按照父菜单获得下一集菜单
+    //查找用户的所有菜单
     @ResponseBody
     @RequestMapping(value = "/listMenus", method = RequestMethod.POST)
-    public Result<List<Menu>> listMenus(@RequestBody UserMenu userMenu){
+    public Result<List<Menu>> listMenusSelect(@RequestBody UserMenu userMenu){
         Result<List<Menu>> result;
-        result = menuService.listMenus(userMenu);
-        return result;
+        return menuService.listMenusSelect(userMenu);
     }
 }

@@ -7,9 +7,9 @@ import com.wzh.paper.entity.Result;
 import java.util.List;
 
 public interface MenuService {
-    Result createMenu(Menu menu);
+    Result saveMenu(Menu menu);
 
-    Result<List<Menu>> listMenusByParent(UserMenu userMenu);
+    Result<List<Menu>> listMenusByParentSelect(UserMenu userMenu);
 
-    Result<List<Menu>> listMenus(UserMenu userMenu);
+    Result<List<Menu>> listMenusSelect(UserMenu userMenu);
 }

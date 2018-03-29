@@ -16,7 +16,7 @@ public interface UserService {
 
     Result saveRolesUser(User user);
 
-    Result<User> listUsersByRole(long roleId, boolean flag);
+    Result<User> listUsersByRoleSelect(long roleId, boolean flag);
 
-    Result<User> getUserInfo(User user);
+    Result<User> getUserInfoSelect(User user);
 }

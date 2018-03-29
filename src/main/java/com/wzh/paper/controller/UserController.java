@@ -53,20 +53,20 @@ public class UserController {
     @ResponseBody
     @RequestMapping(value = "/listUsersByRole/{role_id}", method = RequestMethod.GET)
     public Result<User> listUsersByRole(@PathVariable("role_id") long roldId){
-        return userService.listUsersByRole(roldId, true);
+        return userService.listUsersByRoleSelect(roldId, true);
     }
 
     //列出不是此角色下的用户
     @ResponseBody
     @RequestMapping(value = "/listUsersNotByRole/{role_id}", method = RequestMethod.GET)
     public Result<User> listUsersNotByRole(@PathVariable("role_id") long roldId){
-        return userService.listUsersByRole(roldId, false);
+        return userService.listUsersByRoleSelect(roldId, false);
     }
 
     //根据用户名查询用户详细信息
     @ResponseBody
     @RequestMapping(value = "/getUserInfo", method = RequestMethod.POST)
-    public Result<User> getUserInfo(@RequestBody User user){
-        return userService.getUserInfo(user);
+    public Result<User> getUserInfoSelect(@RequestBody User user){
+        return userService.getUserInfoSelect(user);
     }
 }
