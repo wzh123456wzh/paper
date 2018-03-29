@@ -75,4 +75,61 @@ public class StockServiceImpl implements StockService {
         }
         return result;
     }
+
+    @Override
+    public Result buyStock(StockDTO stockDTO) {
+        Result result;
+        try {
+
+            stockDAO.buyStock(stockDTO);
+            result = new Result<>(Result.getSuccessCode(), "购买股票成功");
+        } catch (Exception e) {
+            result = new Result<>(Result.getFailCode(), "购买股票失败");
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    @Override
+    public Result attentionStock(StockDTO dto) {
+        Result result;
+        try {
+            stockDAO.attentionStock(dto);
+            result = new Result<>(Result.getSuccessCode(), "关注股票成功");
+        } catch (Exception e) {
+            result = new Result<>(Result.getFailCode(), "关注股票失败");
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    @Override
+    public Result isAttention(StockDTO dto) {
+        Result result;
+        try {
+            int status = stockDAO.isAttention(dto);
+            if(status == 1){
+                result = new Result<>(Result.getSuccessCode(), "股票已经关注");
+            } else {
+                result = new Result<>(Result.getEmptyCode(), "股票还未关注");
+            }
+        } catch (Exception e) {
+            result = new Result<>(Result.getFailCode(), "获取信息失败");
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    @Override
+    public Result cancenAttention(StockDTO dto) {
+        Result result;
+        try {
+            stockDAO.cancenAttention(dto);
+            result = new Result<>(Result.getSuccessCode(), "取消关注股票成功");
+        } catch (Exception e) {
+            result = new Result<>(Result.getFailCode(), "取消关注股票失败");
+            e.printStackTrace();
+        }
+        return result;
+    }
 }

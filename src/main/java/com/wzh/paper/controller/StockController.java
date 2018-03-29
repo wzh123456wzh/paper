@@ -50,4 +50,32 @@ public class StockController {
         return stockService.getSymbolLastInfo(dto);
     }
 
+    //购买股票
+    @ResponseBody
+    @RequestMapping(value = "/buyStock", method = RequestMethod.POST)
+    public Result buyStock(@RequestBody StockDTO StockDTO){
+        return stockService.buyStock(StockDTO);
+
+    }
+
+    //加入自选
+    @ResponseBody
+    @RequestMapping(value = "/attentionStock", method = RequestMethod.POST)
+    public Result attentionStock(@RequestBody StockDTO dto){
+        return stockService.attentionStock(dto);
+    }
+
+    //判断是否已经关注股票
+    @ResponseBody
+    @RequestMapping(value = "/isAttention", method = RequestMethod.POST)
+    public Result isAttention(@RequestBody StockDTO dto){
+        return stockService.isAttention(dto);
+    }
+
+    //判断是否已经关注股票
+    @ResponseBody
+    @RequestMapping(value = "/cancenAttention", method = RequestMethod.POST)
+    public Result cancenAttention(@RequestBody StockDTO dto){
+        return stockService.cancenAttention(dto);
+    }
 }

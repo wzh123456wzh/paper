@@ -54,7 +54,7 @@ public class MenuServiceImpl implements MenuService {
         Result<List<Menu>> result;
         try{
             List<Menu> tmpList = menuDAO.listMenus(userMenu);
-            List<Menu> resultList = new ArrayList<>(10);
+            List<Menu> resultList = new ArrayList<Menu>(10);
             //查询full_path长度为5的第一个元素(第二级菜单)
             int secondMenuIndex = 0;
             for(int i = 0; i < tmpList.size(); i++){

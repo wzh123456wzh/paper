@@ -17,4 +17,12 @@ public interface StockService {
     Result<List<StockInfo>> listStockName(StockDTO dto);
 
     Result<StockInfo> getSymbolLastInfo(StockDTO dto);
+
+    Result buyStock(StockDTO stockDTO);
+
+    Result attentionStock(StockDTO dto);
+
+    Result isAttention(StockDTO dto);
+
+    Result cancenAttention(StockDTO dto);
 }

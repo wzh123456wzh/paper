@@ -17,4 +17,12 @@ public interface StockDAO {
     List<StockInfo> listStockName(StockDTO dto);
 
     StockInfo getSymbolLastInfo(StockDTO dto);
+
+    void buyStock(StockDTO stockDTO);
+
+    void attentionStock(StockDTO dto);
+
+    int isAttention(StockDTO dto);
+
+    void cancenAttention(StockDTO dto);
 }

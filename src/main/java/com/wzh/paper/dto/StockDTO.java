@@ -8,6 +8,8 @@ public class StockDTO {
     private String symbol;
     private String stockName;
     private String keyword;
+    private String userId;
+    private int stockNum;
 
 
     public String getKeyword() {
@@ -64,5 +66,21 @@ public class StockDTO {
 
     public void setStockName(String stockName) {
         this.stockName = stockName;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public int getStockNum() {
+        return stockNum;
+    }
+
+    public void setStockNum(int stockNum) {
+        this.stockNum = stockNum;
     }
 }

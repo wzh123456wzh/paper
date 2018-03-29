@@ -41,4 +41,27 @@
         order by stock_date DESC
         limit 0, 1
     </select>
+
+    <select id="existStock">
+        select count(1) from user_stock_buy where symbol = #{symbol}
+    </select>
+
+    <insert id="buyStock">
+        insert into user_stock_buy(user_id, symbol, count) values(#{userId}, #{symbol}, #{stockNum})
+        on duplicate key update count = count + #{stockNum}
+    </insert>
+
+    <insert id="attentionStock">
+        insert into user_stock_follow(user_id, symbol) values(#{userId}, #{symbol})
+        on duplicate key update status = 1
+    </insert>
+
+    <select id="isAttention" resultType="integer">
+        select status from user_stock_follow where symbol = #{symbol} and user_id = #{userId}
+    </select>
+
+    <update id="cancenAttention">
+        update user_stock_follow set status = 0 where user_id = #{userId} and symbol = #{symbol}
+    </update>
+
 </mapper>
