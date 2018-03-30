@@ -42,13 +42,31 @@
         limit 0, 1
     </select>
 
-    <select id="existStock">
-        select count(1) from user_stock_buy where symbol = #{symbol}
+    <insert id="buyStock">
+        insert into trade_in(user_id, symbol, count, buy_amount) values(#{userId}, #{symbol}, #{stockNum}, #{stockAmount})
+    </insert>
+
+    <!--查询用户可用资金-->
+    <select id="getUserMoney" resultType="integer">
+        select current_cash
+        from user_account
+        where user_id = #{userId}
     </select>
 
-    <insert id="buyStock">
-        insert into user_stock_buy(user_id, symbol, count) values(#{userId}, #{symbol}, #{stockNum})
-        on duplicate key update count = count + #{stockNum}
+    <!--更新用户资金表-->
+    <update id="updateUserAccount">
+        update user_account set current_cash = current_cash - (#{stockNum} * #{stockAmount})
+    </update>
+
+    <!--查询用户股票数量-->
+    <select id="getStockNumSelect" resultType="integer">
+        select count
+        from user_stock_buy
+        where user_id = #{userId} and symbol = #{symbol}
+    </select>
+
+    <insert id="sellStock">
+        insert into trade_out(user_id, symbol, count, selling_amount) values(#{userId}, #{symbol}, #{stockNum}, #{stockAmount})
     </insert>
 
     <insert id="attentionStock">
@@ -56,12 +74,18 @@
         on duplicate key update status = 1
     </insert>
 
-    <select id="isAttention" resultType="integer">
-        select status from user_stock_follow where symbol = #{symbol} and user_id = #{userId}
+    <select id="isAttention" resultType="StockInfo">
+        select symbol from user_stock_follow where symbol = #{symbol} and user_id = #{userId}
+        and status = 1
     </select>
 
     <update id="cancenAttention">
         update user_stock_follow set status = 0 where user_id = #{userId} and symbol = #{symbol}
     </update>
 
+    <insert id="insertUpdateHoldUser">
+        INSERT INTO user_stock_buy (user_id, symbol, count)
+        VALUES(#{userId}, #{symbol}, #{stockNum})
+        ON DUPLICATE KEY update count = count + #{stockNum}
+    </insert>
 </mapper>

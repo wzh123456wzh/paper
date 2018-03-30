@@ -10,7 +10,15 @@ public class StockDTO {
     private String keyword;
     private String userId;
     private int stockNum;
+    private Double stockAmount;//股票价格
 
+    public Double getStockAmount() {
+        return stockAmount;
+    }
+
+    public void setStockAmount(Double stockAmount) {
+        this.stockAmount = stockAmount;
+    }
 
     public String getKeyword() {
         return keyword;

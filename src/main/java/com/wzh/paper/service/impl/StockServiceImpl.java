@@ -10,6 +10,8 @@ import com.wzh.paper.service.StockService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.transaction.Transactional;
+import java.beans.Transient;
 import java.util.List;
 
 @Service
@@ -20,116 +22,152 @@ public class StockServiceImpl implements StockService {
 
 
     @Override
-    public Result<PageInfo<List<StockInfo>>> listStockInfo(StockDTO dto) {
-        Result<PageInfo<List<StockInfo>>> result;
+    public Result<PageInfo<List<StockInfo>>> listStockInfoSelect(StockDTO dto) {
+//        Result<PageInfo<List<StockInfo>>> result;
         dto.setPageNum(dto.getPageNum() == null ? 1 : dto.getPageNum());
         dto.setPageSize(dto.getPageSize() == null ? 10 : dto.getPageSize());
-        try {
+//        try {
             PageHelper.startPage(dto.getPageNum(),
                     dto.getPageSize(), true);
             List<StockInfo> stockInfoList = stockDAO.listStockInfo(dto);
             PageInfo<List<StockInfo>> pageInfo = new PageInfo(stockInfoList);
-            result = new Result<>(Result.getSuccessCode(), "数据查询成功", pageInfo);
-        } catch (Exception e) {
-            result = new Result<>(Result.getFailCode(), "数据查询失败");
-            e.printStackTrace();
-        }
-        return result;
+//            result = new Result<>(Result.getSuccessCode(), "数据查询成功", pageInfo);
+//        } catch (Exception e) {
+//            result = new Result<>(Result.getFailCode(), "数据查询失败");
+//            e.printStackTrace();
+//        }
+        return new Result(pageInfo);
     }
 
     @Override
-    public Result<List<StockInfo>> listStockByChart(StockDTO dto) {
-        Result<List<StockInfo>> result;
-        try {
+    public Result<List<StockInfo>> listStockByChartSelect(StockDTO dto) {
+//        Result<List<StockInfo>> result;
+//        try {
             List<StockInfo> stockInfoList = stockDAO.listStockByChart(dto);
-            result = new Result<>(Result.getSuccessCode(), "数据查询成功", stockInfoList);
-        } catch (Exception e) {
-            result = new Result<>(Result.getFailCode(), "数据查询失败");
-            e.printStackTrace();
-        }
-        return result;
+//            result = new Result<>(Result.getSuccessCode(), "数据查询成功", stockInfoList);
+//        } catch (Exception e) {
+//            result = new Result<>(Result.getFailCode(), "数据查询失败");
+//            e.printStackTrace();
+//        }
+        return new Result(stockInfoList);
     }
 
     @Override
-    public Result<List<StockInfo>> listStockName(StockDTO dto) {
-        Result<List<StockInfo>> result;
-        try {
+    public Result<List<StockInfo>> listStockNameSelect(StockDTO dto) {
+//        Result<List<StockInfo>> result;
+//        try {
             List<StockInfo> stockInfoList = stockDAO.listStockName(dto);
-            result = new Result<>(Result.getSuccessCode(), "数据查询成功", stockInfoList);
-        } catch (Exception e) {
-            result = new Result<>(Result.getFailCode(), "数据查询失败");
-            e.printStackTrace();
-        }
-        return result;
+//            result = new Result<>(Result.getSuccessCode(), "数据查询成功", stockInfoList);
+//        } catch (Exception e) {
+//            result = new Result<>(Result.getFailCode(), "数据查询失败");
+//            e.printStackTrace();
+//        }
+        return new Result(stockInfoList);
     }
 
     @Override
-    public Result<StockInfo> getSymbolLastInfo(StockDTO dto) {
-        Result<StockInfo> result;
-        try {
+    public Result<StockInfo> getSymbolLastInfoSelect(StockDTO dto) {
+//        Result<StockInfo> result;
+//        try {
             StockInfo stockInfoList = stockDAO.getSymbolLastInfo(dto);
-            result = new Result<>(Result.getSuccessCode(), "数据查询成功", stockInfoList);
-        } catch (Exception e) {
-            result = new Result<>(Result.getFailCode(), "数据查询失败");
-            e.printStackTrace();
-        }
-        return result;
+//            result = new Result<>(Result.getSuccessCode(), "数据查询成功", stockInfoList);
+//        } catch (Exception e) {
+//            result = new Result<>(Result.getFailCode(), "数据查询失败");
+//            e.printStackTrace();
+//        }
+        return new Result(stockInfoList);
     }
 
+    @Transactional
     @Override
-    public Result buyStock(StockDTO stockDTO) {
+    public Result saveBuyStock(StockDTO stockDTO) {
         Result result;
-        try {
-
+//        try {
+        //检查金额最多能购买多少股
+        int money = stockDAO.getUserMoney(stockDTO);
+        int count = (int) (money / stockDTO.getStockAmount());
+        if(count > stockDTO.getStockNum()){
+            //插入买入历史表
             stockDAO.buyStock(stockDTO);
-            result = new Result<>(Result.getSuccessCode(), "购买股票成功");
-        } catch (Exception e) {
-            result = new Result<>(Result.getFailCode(), "购买股票失败");
-            e.printStackTrace();
+            //更新用户账户金额
+            stockDAO.updateUserAccount(stockDTO);
+            //插入或更新用户股票持有表
+            stockDAO.insertUpdateHoldUser(stockDTO);
+            result = new Result();
+        } else {
+            result = new Result(Result.getFailCode(), "账户余额不足");
         }
+//            result = new Result<>(Result.getSuccessCode(), "购买股票成功");
+//        } catch (Exception e) {
+//            result = new Result<>(Result.getFailCode(), "购买股票失败");
+//            e.printStackTrace();
+//        }
         return result;
     }
 
     @Override
-    public Result attentionStock(StockDTO dto) {
+    public Result saveSellStock(StockDTO stockDTO) {
         Result result;
-        try {
+        //查询用户持有多少股
+        int stockNum = stockDAO.getStockNumSelect(stockDTO);
+        if(stockNum > stockDTO.getStockNum()){
+            //插入卖出历史表
+            stockDAO.sellStock(stockDTO);
+            //更新用户账户金额
+            stockDTO.setStockAmount(-stockDTO.getStockAmount());
+            stockDAO.updateUserAccount(stockDTO);
+            //插入或更新用户股票持有表
+            stockDTO.setStockNum(-stockDTO.getStockNum());
+            stockDAO.insertUpdateHoldUser(stockDTO);
+            result = new Result();
+        } else{
+            result = new Result(Result.getFailCode(), "超出用所所剩余的股票数量");
+        }
+
+        return result;
+    }
+
+    @Override
+    public Result saveAttentionStock(StockDTO dto) {
+//        Result result;
+//        try {
             stockDAO.attentionStock(dto);
-            result = new Result<>(Result.getSuccessCode(), "关注股票成功");
-        } catch (Exception e) {
-            result = new Result<>(Result.getFailCode(), "关注股票失败");
-            e.printStackTrace();
-        }
-        return result;
+//            result = new Result<>(Result.getSuccessCode(), "关注股票成功");
+//        } catch (Exception e) {
+//            result = new Result<>(Result.getFailCode(), "关注股票失败");
+//            e.printStackTrace();
+//        }
+        return new Result();
     }
 
     @Override
-    public Result isAttention(StockDTO dto) {
-        Result result;
-        try {
-            int status = stockDAO.isAttention(dto);
-            if(status == 1){
-                result = new Result<>(Result.getSuccessCode(), "股票已经关注");
-            } else {
-                result = new Result<>(Result.getEmptyCode(), "股票还未关注");
-            }
-        } catch (Exception e) {
-            result = new Result<>(Result.getFailCode(), "获取信息失败");
-            e.printStackTrace();
-        }
-        return result;
+    public Result isAttentionSelect(StockDTO dto) {
+//        Result result;
+//        try {
+            StockInfo stockInfo = stockDAO.isAttention(dto);
+//            if(status == 1){
+//                result = new Result<>(Result.getSuccessCode(), "股票已经关注", status);
+//            } else {
+//                result = new Result<>(Result.getEmptyCode(), "股票还未关注");
+//            }
+//        } catch (Exception e) {
+//            result = new Result<>(Result.getFailCode(), "获取信息失败");
+//            e.printStackTrace();
+//        }
+        return new Result(stockInfo);
     }
 
     @Override
-    public Result cancenAttention(StockDTO dto) {
-        Result result;
-        try {
+    public Result updateCancenAttention(StockDTO dto) {
+//        Result result;
+//        try {
             stockDAO.cancenAttention(dto);
-            result = new Result<>(Result.getSuccessCode(), "取消关注股票成功");
-        } catch (Exception e) {
-            result = new Result<>(Result.getFailCode(), "取消关注股票失败");
-            e.printStackTrace();
-        }
-        return result;
+//            result = new Result<>(Result.getSuccessCode(), "取消关注股票成功");
+//        } catch (Exception e) {
+//            result = new Result<>(Result.getFailCode(), "取消关注股票失败");
+//            e.printStackTrace();
+//        }
+        return new Result();
     }
+
 }

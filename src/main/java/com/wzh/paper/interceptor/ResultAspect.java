@@ -18,8 +18,8 @@ public class ResultAspect {
     private void saveMethod() {
     }
 
-    @Pointcut("execution (* com.wzh.paper.service.impl.*.delete*(..))")
-    private void deleteMethod() {
+    @Pointcut("execution (* com.wzh.paper.service.impl.*.remove*(..))")
+    private void removeMethod() {
     }
 
     @Pointcut("execution (* com.wzh.paper.service.impl.*.*Select(..))")
@@ -78,15 +78,43 @@ public class ResultAspect {
         return result;
     }
 
-//    @AfterReturning(returning="result", pointcut = "saveMethod()")
-//    public void doAccessUpdate(JoinPoint joinPoint, Result result) {
-//        if(result != null){
-////            result = new Result(Result.SAVE_SUCCESS_CODE, "添加成功");
-//            result.setCode(Result.SAVE_SUCCESS_CODE);
-//            result.setMsg("添加成功");
-//        } else{
-//            result.setCode(Result.SAVE_FAIL_CODE);
-//            result.setMsg("添加失败");
-//        }
-//    }
+    @AfterReturning(returning="result", pointcut = "updateMethod()")
+    public void doAccessUpdate(JoinPoint joinPoint, Result result) {
+        if(result != null && result.getCode() != Result.UPDATE_FAIL_CODE){
+            result.setCode(Result.UPDATE_SUCCESS_CODE);
+            result.setMsg("更新成功");
+        }
+    }
+
+    @Around("updateMethod()")
+    public Result doAccessUpdateRound(ProceedingJoinPoint pjp) {
+        Result result;
+        try{
+            result = (Result) pjp.proceed();
+        } catch (Throwable e){
+            result = new Result(Result.UPDATE_FAIL_CODE, "更新失败");
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    @AfterReturning(returning="result", pointcut = "removeMethod()")
+    public void doAccessRemove(JoinPoint joinPoint, Result result) {
+        if(result != null && result.getCode() != Result.REMOVEAIL_CODE){
+            result.setCode(Result.REMOVE_SUCCESS_CODE);
+            result.setMsg("删除成功");
+        }
+    }
+
+    @Around("removeMethod()")
+    public Result doAccessRemoveRound(ProceedingJoinPoint pjp) {
+        Result result;
+        try{
+            result = (Result) pjp.proceed();
+        } catch (Throwable e){
+            result = new Result(Result.REMOVEAIL_CODE, "删除失败");
+            e.printStackTrace();
+        }
+        return result;
+    }
 }

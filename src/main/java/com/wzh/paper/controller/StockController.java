@@ -1,6 +1,5 @@
 package com.wzh.paper.controller;
 
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 import com.wzh.paper.dto.StockDTO;
 import com.wzh.paper.entity.Result;
@@ -26,56 +25,62 @@ public class StockController {
     @ResponseBody
     @RequestMapping(value = "/listStockInfo", method = RequestMethod.POST)
     public Result<PageInfo<List<StockInfo>>> listStockInfo(@RequestBody StockDTO dto){
-        return stockService.listStockInfo(dto);
+        return stockService.listStockInfoSelect(dto);
     }
 
     //用图表展示股票价格
     @ResponseBody
     @RequestMapping(value = "/listStockByChart", method = RequestMethod.POST)
     public Result<List<StockInfo>> listStockByChart(@RequestBody StockDTO dto){
-        return stockService.listStockByChart(dto);
+        return stockService.listStockByChartSelect(dto);
     }
 
     //根据股票代码，名称模糊查询
     @ResponseBody
     @RequestMapping(value = "/listStockName", method = RequestMethod.POST)
     public Result<List<StockInfo>> listStockName(@RequestBody StockDTO dto){
-        return stockService.listStockName(dto);
+        return stockService.listStockNameSelect(dto);
     }
 
     //根据股票代码，查询股票详细信息
     @ResponseBody
     @RequestMapping(value = "/getSymbolLastInfo", method = RequestMethod.POST)
     public Result<StockInfo> getSymbolLastInfo(@RequestBody StockDTO dto){
-        return stockService.getSymbolLastInfo(dto);
+        return stockService.getSymbolLastInfoSelect(dto);
     }
 
     //购买股票
     @ResponseBody
     @RequestMapping(value = "/buyStock", method = RequestMethod.POST)
     public Result buyStock(@RequestBody StockDTO StockDTO){
-        return stockService.buyStock(StockDTO);
+        return stockService.saveBuyStock(StockDTO);
+    }
 
+    //卖出股票
+    @ResponseBody
+    @RequestMapping(value = "/sellStock", method = RequestMethod.POST)
+    public Result sellStock(@RequestBody StockDTO StockDTO){
+        return stockService.saveSellStock(StockDTO);
     }
 
     //加入自选
     @ResponseBody
     @RequestMapping(value = "/attentionStock", method = RequestMethod.POST)
     public Result attentionStock(@RequestBody StockDTO dto){
-        return stockService.attentionStock(dto);
+        return stockService.saveAttentionStock(dto);
     }
 
     //判断是否已经关注股票
     @ResponseBody
     @RequestMapping(value = "/isAttention", method = RequestMethod.POST)
     public Result isAttention(@RequestBody StockDTO dto){
-        return stockService.isAttention(dto);
+        return stockService.isAttentionSelect(dto);
     }
 
     //判断是否已经关注股票
     @ResponseBody
     @RequestMapping(value = "/cancenAttention", method = RequestMethod.POST)
     public Result cancenAttention(@RequestBody StockDTO dto){
-        return stockService.cancenAttention(dto);
+        return stockService.updateCancenAttention(dto);
     }
 }

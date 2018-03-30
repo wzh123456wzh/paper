@@ -20,40 +20,19 @@ public class RoleServiceImpl implements RoleService{
 
     @Override
     public Result saveRole(Role role) {
-//        Result result;
-//        try {
-            roleDAO.saveRole(role);
-//            result = new Result(Result.SUCCESS_CODE, "添加成功");
-//        } catch (Exception e) {
-//            result = new Result(Result.FAIL_CODE, "添加失败");
-//            e.printStackTrace();
-//        }
+        roleDAO.saveRole(role);
         return new Result();
     }
 
     @Override
     public Result saveUsersRole(Role role) {
-//        Result result;
-//        try {
-            roleDAO.saveUsersRole(role);
-//            result = new Result(Result.SUCCESS_CODE, "添加成功");
-//        } catch (Exception e) {
-//            result = new Result(Result.FAIL_CODE, "添加失败");
-//            e.printStackTrace();
-//        }
+        roleDAO.saveUsersRole(role);
         return new Result();
     }
 
     @Override
     public Result saveMenusRole(Role role) {
-//        Result result;
-//        try {
-            roleDAO.saveMenusRole(role);
-//            result = new Result(Result.SUCCESS_CODE, "添加成功");
-//        } catch (Exception e) {
-//            result = new Result(Result.FAIL_CODE, "添加失败");
-//            e.printStackTrace();
-//        }
+        roleDAO.saveMenusRole(role);
         return new Result();
     }
 
@@ -62,36 +41,22 @@ public class RoleServiceImpl implements RoleService{
     @Override
     public Result listRolesUserSelect(User user, boolean flag) {
         List<Role> roles;
-//        Result result;
-//        try {
             if(flag){
                 roles = roleDAO.listRolesByUser(user);
             } else {
                 roles = roleDAO.listRolesNotByUser(user);
             }
-//            result = new Result(Result.FAIL_CODE, "查询成功", roles);
-//        } catch (Exception e) {
-//            result = new Result(Result.FAIL_CODE, "查询失败");
-//            e.printStackTrace();
-//        }
         return new Result(roles);
     }
 
     @Override
     public Result listRolesMenuSelect(Menu menu, boolean flag) {
         List<Role> roles;
-//        Result result;
-//        try {
-            if(flag){
-                roles = roleDAO.listRolesByMenu(menu);
-            } else {
-                roles = roleDAO.listRolesNotByMenu(menu);
-            }
-//            result = new Result(Result.FAIL_CODE, "查询成功", roles);
-//        } catch (Exception e) {
-//            result = new Result(Result.FAIL_CODE, "查询失败");
-//            e.printStackTrace();
-//        }
+        if(flag){
+            roles = roleDAO.listRolesByMenu(menu);
+        } else {
+            roles = roleDAO.listRolesNotByMenu(menu);
+        }
         return new Result(roles);
     }
 
