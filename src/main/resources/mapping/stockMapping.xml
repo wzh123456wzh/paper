@@ -64,4 +64,26 @@
         update user_stock_follow set status = 0 where user_id = #{userId} and symbol = #{symbol}
     </update>
 
+    <select id="listAttentionStockSelect" resultType="StockInfo">
+        SELECT
+            info.stock_name,
+            info.last_trade,
+            info.chg,
+            info.volume,
+            info.turnover,
+            info.turnover_rate,
+            info.swing,
+            info.qrr,
+            info.the_committee,
+            info.peratio
+        FROM
+            stock_info info
+        LEFT JOIN user_stock_follow fo ON info.symbol = fo.symbol
+        WHERE
+            fo.status = 1
+        AND fo.user_id = #{userId}
+        ORDER BY
+            info.stock_date
+        LIMIT 0, (select count(1) from user_stock_follow where user_id = #{userId} and status = 1)
+    </select>
 </mapper>

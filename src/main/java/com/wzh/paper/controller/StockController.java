@@ -78,4 +78,11 @@ public class StockController {
     public Result cancenAttention(@RequestBody StockDTO dto){
         return stockService.cancenAttention(dto);
     }
+
+    @ResponseBody
+    @RequestMapping(value = "/listAttentionStock", method = RequestMethod.POST)
+    public Result<List<StockInfo>> listAttentionStockSelect(@RequestBody StockDTO dto){
+        return stockService.listAttentionStockSelect(dto);
+    }
+
 }
