@@ -27,4 +27,6 @@ public interface StockService {
     Result cancenAttention(StockDTO dto);
 
     Result<List<StockInfo>> listAttentionStockSelect(StockDTO dto);
+
+    Result<List<StockInfo>> listBuyStockSelect(StockDTO dto);
 }

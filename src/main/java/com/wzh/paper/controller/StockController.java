@@ -79,10 +79,17 @@ public class StockController {
         return stockService.cancenAttention(dto);
     }
 
+    //已经关注的股票列表
     @ResponseBody
     @RequestMapping(value = "/listAttentionStock", method = RequestMethod.POST)
     public Result<List<StockInfo>> listAttentionStockSelect(@RequestBody StockDTO dto){
         return stockService.listAttentionStockSelect(dto);
     }
 
+    //已经购买的股票列表
+    @ResponseBody
+    @RequestMapping(value = "/listBuyStock", method = RequestMethod.POST)
+    public Result<List<StockInfo>> listBuyStockSelect(@RequestBody StockDTO dto){
+        return stockService.listBuyStockSelect(dto);
+    }
 }

@@ -28,4 +28,6 @@ public interface StockDAO {
     void cancenAttention(StockDTO dto);
 
     List<StockInfo> listAttentionStockSelect(StockDTO dto);
+
+    List<StockInfo> listBuyStockSelect(StockDTO dto);
 }
