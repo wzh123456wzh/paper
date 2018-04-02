@@ -17,7 +17,7 @@ public class Result<T> {
     public static final int SAVE_FAIL_CODE = 201;
     public static final int REMOVEAIL_CODE = 202;
     public static final int SELECT_FAIL_CODE = 203;
-    public static final int UPDATE_SFAIL_CODE = 204;
+    public static final int UPDATE_FAIL_CODE = 204;
     public static final int EMPTY_CODE = 300;
 
     public Result(int code, String msg, T data){
@@ -101,8 +101,8 @@ public class Result<T> {
         return SELECT_FAIL_CODE;
     }
 
-    public static int getUpdateSfailCode() {
-        return UPDATE_SFAIL_CODE;
+    public static int getUpdateFailCode() {
+        return UPDATE_FAIL_CODE;
     }
 
     public static int getEmptyCode() {
