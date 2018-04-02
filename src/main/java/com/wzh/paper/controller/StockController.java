@@ -52,8 +52,8 @@ public class StockController {
     //购买股票
     @ResponseBody
     @RequestMapping(value = "/buyStock", method = RequestMethod.POST)
-    public Result buyStock(@RequestBody StockDTO StockDTO){
-        return stockService.saveBuyStock(StockDTO);
+    public Result buyStock(@RequestBody StockDTO stockDTO){
+        return stockService.saveBuyStock(stockDTO);
     }
 
     //卖出股票
@@ -63,11 +63,11 @@ public class StockController {
         return stockService.saveSellStock(StockDTO);
     }
 
-    //加入自选
+    //关注股票
     @ResponseBody
     @RequestMapping(value = "/attentionStock", method = RequestMethod.POST)
     public Result attentionStock(@RequestBody StockDTO dto){
-        return stockService.saveAttentionStock(dto);
+        return stockService.updateAttentionStock(dto);
     }
 
     //判断是否已经关注股票
@@ -77,7 +77,7 @@ public class StockController {
         return stockService.isAttentionSelect(dto);
     }
 
-    //判断是否已经关注股票
+    //取消关注股票
     @ResponseBody
     @RequestMapping(value = "/cancenAttention", method = RequestMethod.POST)
     public Result cancenAttention(@RequestBody StockDTO dto){
@@ -96,5 +96,12 @@ public class StockController {
     @RequestMapping(value = "/listBuyStock", method = RequestMethod.POST)
     public Result<List<StockInfo>> listBuyStockSelect(@RequestBody StockDTO dto){
         return stockService.listBuyStockSelect(dto);
+    }
+
+    //交易记录列表
+    @ResponseBody
+    @RequestMapping(value = "/listStockDistory", method = RequestMethod.POST)
+    public Result<List<StockInfo>> listStockDistorySelect(@RequestBody StockDTO dto){
+        return stockService.listStockDistorySelect(dto);
     }
 }

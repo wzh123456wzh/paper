@@ -22,7 +22,23 @@ public interface StockDAO {
 
     void attentionStock(StockDTO dto);
 
-    int isAttention(StockDTO dto);
+    StockInfo isAttention(StockDTO dto);
 
     void cancenAttention(StockDTO dto);
+
+    int getUserMoney(StockDTO stockDTO);
+
+    void updateUserAccount(StockDTO stockDTO);
+
+    void insertUpdateHoldUser(StockDTO stockDTO);
+
+    int getStockNumSelect(StockDTO stockDTO);
+
+    void sellStock(StockDTO stockDTO);
+
+    List<StockInfo> listAttentionStockSelect(StockDTO dto);
+
+    List<StockInfo> listBuyStockSelect(StockDTO dto);
+
+    List<StockInfo> listStockDistorySelect(StockDTO dto);
 }

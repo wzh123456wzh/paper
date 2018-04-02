@@ -10,19 +10,27 @@ import com.wzh.paper.entity.StockInfo;
 import java.util.List;
 
 public interface StockService {
-    Result<PageInfo<List<StockInfo>>> listStockInfo(StockDTO dto);
+    Result<PageInfo<List<StockInfo>>> listStockInfoSelect(StockDTO dto);
 
-    Result<List<StockInfo>> listStockByChart(StockDTO dto);
+    Result<List<StockInfo>> listStockByChartSelect(StockDTO dto);
 
-    Result<List<StockInfo>> listStockName(StockDTO dto);
+    Result<List<StockInfo>> listStockNameSelect(StockDTO dto);
 
-    Result<StockInfo> getSymbolLastInfo(StockDTO dto);
+    Result<StockInfo> getSymbolLastInfoSelect(StockDTO dto);
 
-    Result buyStock(StockDTO stockDTO);
+    Result saveBuyStock(StockDTO stockDTO);
 
-    Result attentionStock(StockDTO dto);
+    Result updateAttentionStock(StockDTO dto);
 
-    Result isAttention(StockDTO dto);
+    Result isAttentionSelect(StockDTO dto);
 
-    Result cancenAttention(StockDTO dto);
+    Result updateCancenAttention(StockDTO dto);
+
+    Result saveSellStock(StockDTO stockDTO);
+
+    Result<List<StockInfo>> listAttentionStockSelect(StockDTO dto);
+
+    Result<List<StockInfo>> listBuyStockSelect(StockDTO dto);
+
+    Result<List<StockInfo>> listStockDistorySelect(StockDTO dto);
 }
