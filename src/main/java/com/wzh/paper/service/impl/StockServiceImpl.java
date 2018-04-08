@@ -27,10 +27,10 @@ public class StockServiceImpl implements StockService {
         dto.setPageNum(dto.getPageNum() == null ? 1 : dto.getPageNum());
         dto.setPageSize(dto.getPageSize() == null ? 10 : dto.getPageSize());
 //        try {
-            PageHelper.startPage(dto.getPageNum(),
-                    dto.getPageSize(), true);
-            List<StockInfo> stockInfoList = stockDAO.listStockInfo(dto);
-            PageInfo<List<StockInfo>> pageInfo = new PageInfo(stockInfoList);
+        PageHelper.startPage(dto.getPageNum(),
+                dto.getPageSize(), true);
+        List<StockInfo> stockInfoList = stockDAO.listStockInfo(dto);
+        PageInfo<List<StockInfo>> pageInfo = new PageInfo(stockInfoList);
 //            result = new Result<>(Result.getSuccessCode(), "数据查询成功", pageInfo);
 //        } catch (Exception e) {
 //            result = new Result<>(Result.getFailCode(), "数据查询失败");
@@ -43,7 +43,7 @@ public class StockServiceImpl implements StockService {
     public Result<List<StockInfo>> listStockByChartSelect(StockDTO dto) {
 //        Result<List<StockInfo>> result;
 //        try {
-            List<StockInfo> stockInfoList = stockDAO.listStockByChart(dto);
+        List<StockInfo> stockInfoList = stockDAO.listStockByChart(dto);
 //            result = new Result<>(Result.getSuccessCode(), "数据查询成功", stockInfoList);
 //        } catch (Exception e) {
 //            result = new Result<>(Result.getFailCode(), "数据查询失败");
@@ -56,7 +56,7 @@ public class StockServiceImpl implements StockService {
     public Result<List<StockInfo>> listStockNameSelect(StockDTO dto) {
 //        Result<List<StockInfo>> result;
 //        try {
-            List<StockInfo> stockInfoList = stockDAO.listStockName(dto);
+        List<StockInfo> stockInfoList = stockDAO.listStockName(dto);
 //            result = new Result<>(Result.getSuccessCode(), "数据查询成功", stockInfoList);
 //        } catch (Exception e) {
 //            result = new Result<>(Result.getFailCode(), "数据查询失败");
@@ -69,7 +69,7 @@ public class StockServiceImpl implements StockService {
     public Result<StockInfo> getSymbolLastInfoSelect(StockDTO dto) {
 //        Result<StockInfo> result;
 //        try {
-            StockInfo stockInfoList = stockDAO.getSymbolLastInfo(dto);
+        StockInfo stockInfoList = stockDAO.getSymbolLastInfo(dto);
 //            result = new Result<>(Result.getSuccessCode(), "数据查询成功", stockInfoList);
 //        } catch (Exception e) {
 //            result = new Result<>(Result.getFailCode(), "数据查询失败");
@@ -85,7 +85,7 @@ public class StockServiceImpl implements StockService {
 //        try {
         //检查金额最多能购买多少股
         int money = stockDAO.getUserMoney(stockDTO);
-        int count = (int) (money / stockDTO.getStockAmount());
+        int count = (int) (money / stockDTO.getLastTrade());
         if(count > stockDTO.getStockNum()){
             //插入买入历史表
             stockDAO.buyStock(stockDTO);
@@ -114,7 +114,7 @@ public class StockServiceImpl implements StockService {
             //插入卖出历史表
             stockDAO.sellStock(stockDTO);
             //更新用户账户金额
-            stockDTO.setStockAmount(-stockDTO.getStockAmount());
+            stockDTO.setLastTrade(-stockDTO.getLastTrade());
             stockDAO.updateUserAccount(stockDTO);
             //插入或更新用户股票持有表
             stockDTO.setStockNum(-stockDTO.getStockNum());
@@ -128,10 +128,28 @@ public class StockServiceImpl implements StockService {
     }
 
     @Override
-    public Result saveAttentionStock(StockDTO dto) {
+    public Result<List<StockInfo>> listAttentionStockSelect(StockDTO dto) {
+        List<StockInfo> stockInfos = stockDAO.listAttentionStockSelect(dto);
+        return new Result<>(stockInfos);
+    }
+
+    @Override
+    public Result<List<StockInfo>> listBuyStockSelect(StockDTO dto) {
+        List<StockInfo> stockInfos = stockDAO.listBuyStockSelect(dto);
+        return new Result<>(stockInfos);
+    }
+
+    @Override
+    public Result<List<StockInfo>> listStockDistorySelect(StockDTO dto) {
+        List<StockInfo> stockInfos = stockDAO.listStockDistorySelect(dto);
+        return new Result<>(stockInfos);
+    }
+
+    @Override
+    public Result updateAttentionStock(StockDTO dto) {
 //        Result result;
 //        try {
-            stockDAO.attentionStock(dto);
+        stockDAO.attentionStock(dto);
 //            result = new Result<>(Result.getSuccessCode(), "关注股票成功");
 //        } catch (Exception e) {
 //            result = new Result<>(Result.getFailCode(), "关注股票失败");
@@ -144,7 +162,7 @@ public class StockServiceImpl implements StockService {
     public Result isAttentionSelect(StockDTO dto) {
 //        Result result;
 //        try {
-            StockInfo stockInfo = stockDAO.isAttention(dto);
+        StockInfo stockInfo = stockDAO.isAttention(dto);
 //            if(status == 1){
 //                result = new Result<>(Result.getSuccessCode(), "股票已经关注", status);
 //            } else {
@@ -161,7 +179,7 @@ public class StockServiceImpl implements StockService {
     public Result updateCancenAttention(StockDTO dto) {
 //        Result result;
 //        try {
-            stockDAO.cancenAttention(dto);
+        stockDAO.cancenAttention(dto);
 //            result = new Result<>(Result.getSuccessCode(), "取消关注股票成功");
 //        } catch (Exception e) {
 //            result = new Result<>(Result.getFailCode(), "取消关注股票失败");

@@ -10,14 +10,14 @@ public class StockDTO {
     private String keyword;
     private String userId;
     private int stockNum;
-    private Double stockAmount;//股票价格
+    private Double lastTrade;//股票价格
 
-    public Double getStockAmount() {
-        return stockAmount;
+    public Double getLastTrade() {
+        return lastTrade;
     }
 
-    public void setStockAmount(Double stockAmount) {
-        this.stockAmount = stockAmount;
+    public void setLastTrade(Double lastTrade) {
+        this.lastTrade = lastTrade;
     }
 
     public String getKeyword() {

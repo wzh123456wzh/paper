@@ -42,8 +42,81 @@
         limit 0, 1
     </select>
 
-    <insert id="buyStock">
-        insert into trade_in(user_id, symbol, count, buy_amount) values(#{userId}, #{symbol}, #{stockNum}, #{stockAmount})
+    <select id="existStock">
+        select count(1) from user_stock_buy where symbol = #{symbol}
+    </select>
+
+    <insert id="attentionStock">
+        insert into user_stock_follow(user_id, symbol) values(#{userId}, #{symbol})
+        on duplicate key update status = 1
+    </insert>
+
+    <select id="isAttention" resultType="StockInfo">
+        select symbol from user_stock_follow where symbol = #{symbol} and user_id = #{userId} and status = 1
+    </select>
+
+    <update id="cancenAttention">
+        update user_stock_follow set status = 0 where user_id = #{userId} and symbol = #{symbol}
+    </update>
+
+    <select id="listAttentionStockSelect" resultType="StockInfo">
+        SELECT
+            info.stock_name,
+            info.last_trade,
+            info.chg,
+            info.volume,
+            info.turnover,
+            info.turnover_rate,
+            info.swing,
+            info.qrr,
+            info.the_committee,
+            info.peratio,
+            info.stock_change
+        FROM
+            stock_info info
+        LEFT JOIN user_stock_follow fo ON info.symbol = fo.symbol
+        WHERE
+            fo.status = 1
+        AND fo.user_id = #{userId}
+        AND info.stock_date = (select max(stock_date) from stock_info)
+        ORDER BY
+            info.stock_name
+    </select>
+
+    <select id="listBuyStockSelect" resultType="StockInfo">
+        SELECT
+            info.stock_name,
+            info.last_trade,
+            info.chg,
+            info.volume,
+            info.turnover,
+            info.turnover_rate,
+            info.swing,
+            info.qrr,
+            info.the_committee,
+            info.peratio,
+            info.stock_change,
+            buy.count,
+            buy.count * info.last_trade amount
+        FROM
+            stock_info info
+        LEFT JOIN user_stock_buy buy ON info.symbol = buy.symbol
+        WHERE
+         buy.user_id = #{userId}
+        AND info.stock_date = (
+            SELECT
+                max(stock_date)
+            FROM
+                stock_info
+        )
+        ORDER BY
+            info.stock_name
+    </select>
+
+    <insert id="insertUpdateHoldUser">
+        INSERT INTO user_stock_buy (user_id, symbol, count)
+        VALUES(#{userId}, #{symbol}, #{stockNum})
+        ON DUPLICATE KEY update count = count + #{stockNum}
     </insert>
 
     <!--查询用户可用资金-->
@@ -55,7 +128,7 @@
 
     <!--更新用户资金表-->
     <update id="updateUserAccount">
-        update user_account set current_cash = current_cash - (#{stockNum} * #{stockAmount})
+        update user_account set current_cash = current_cash - (#{stockNum} * #{lastTrade})
     </update>
 
     <!--查询用户股票数量-->
@@ -66,26 +139,20 @@
     </select>
 
     <insert id="sellStock">
-        insert into trade_out(user_id, symbol, count, selling_amount) values(#{userId}, #{symbol}, #{stockNum}, #{stockAmount})
+        insert into trade_out(user_id, symbol, count, selling_amount) values(#{userId}, #{symbol}, #{stockNum}, #{lastTrade})
     </insert>
 
-    <insert id="attentionStock">
-        insert into user_stock_follow(user_id, symbol) values(#{userId}, #{symbol})
-        on duplicate key update status = 1
+    <insert id="buyStock">
+        insert into trade_in(user_id, symbol, count, buy_amount) values(#{userId}, #{symbol}, #{stockNum}, #{lastTrade})
     </insert>
 
-    <select id="isAttention" resultType="StockInfo">
-        select symbol from user_stock_follow where symbol = #{symbol} and user_id = #{userId}
-        and status = 1
+    <select id="listStockDistorySelect" resultType="StockInfo">
+        select symbol, amount, count, stockDate, value from (
+        select symbol, buy_amount amount, count, create_date stockDate, '买入' value from trade_in where user_id = #{userId}
+        UNION
+        select symbol, selling_amount amount, count, create_date stockDate, '卖出' value from trade_out where user_id = #{userId}
+        ) t
+        order by stockDate
     </select>
 
-    <update id="cancenAttention">
-        update user_stock_follow set status = 0 where user_id = #{userId} and symbol = #{symbol}
-    </update>
-
-    <insert id="insertUpdateHoldUser">
-        INSERT INTO user_stock_buy (user_id, symbol, count)
-        VALUES(#{userId}, #{symbol}, #{stockNum})
-        ON DUPLICATE KEY update count = count + #{stockNum}
-    </insert>
 </mapper>

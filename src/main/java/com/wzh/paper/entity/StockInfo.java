@@ -18,6 +18,8 @@ public class StockInfo {
     private Double peratio; 			 //市盈率
     private String stockDate;               //数据产生的时间
     private String value;               //扩展参数
+    private String count;               //数量
+    private String amount;               //总价
 
     public String getSymbol() {
         return symbol;
@@ -137,5 +139,21 @@ public class StockInfo {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public String getCount() {
+        return count;
+    }
+
+    public void setCount(String count) {
+        this.count = count;
+    }
+
+    public String getAmount() {
+        return amount;
+    }
+
+    public void setAmount(String amount) {
+        this.amount = amount;
     }
 }

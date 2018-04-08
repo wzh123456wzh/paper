@@ -20,11 +20,17 @@ public interface StockService {
 
     Result saveBuyStock(StockDTO stockDTO);
 
-    Result saveAttentionStock(StockDTO dto);
+    Result updateAttentionStock(StockDTO dto);
 
     Result isAttentionSelect(StockDTO dto);
 
     Result updateCancenAttention(StockDTO dto);
 
     Result saveSellStock(StockDTO stockDTO);
+
+    Result<List<StockInfo>> listAttentionStockSelect(StockDTO dto);
+
+    Result<List<StockInfo>> listBuyStockSelect(StockDTO dto);
+
+    Result<List<StockInfo>> listStockDistorySelect(StockDTO dto);
 }

@@ -35,4 +35,10 @@ public interface StockDAO {
     int getStockNumSelect(StockDTO stockDTO);
 
     void sellStock(StockDTO stockDTO);
+
+    List<StockInfo> listAttentionStockSelect(StockDTO dto);
+
+    List<StockInfo> listBuyStockSelect(StockDTO dto);
+
+    List<StockInfo> listStockDistorySelect(StockDTO dto);
 }
