@@ -26,7 +26,7 @@ public class RoleController {
     @RequestMapping(value = "/saveRole", method = RequestMethod.POST)
     public Result saveRole(@RequestBody Role role){
         if(role.getName().length() > 10){
-            return new Result(Result.FAIL_CODE, "角色名称必须少于10个字符");
+            return new Result(Result.ResultCode.FAIL_CODE, "角色名称必须少于10个字符");
         }
         return roleService.saveRole(role);
     }

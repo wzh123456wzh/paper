@@ -95,7 +95,7 @@ public class StockServiceImpl implements StockService {
             stockDAO.insertUpdateHoldUser(stockDTO);
             result = new Result();
         } else {
-            result = new Result(Result.getFailCode(), "账户余额不足");
+            result = new Result(Result.ResultCode.FAIL_CODE, "账户余额不足");
         }
 //            result = new Result<>(Result.getSuccessCode(), "购买股票成功");
 //        } catch (Exception e) {
@@ -121,7 +121,7 @@ public class StockServiceImpl implements StockService {
             stockDAO.insertUpdateHoldUser(stockDTO);
             result = new Result();
         } else{
-            result = new Result(Result.getFailCode(), "超出用所所剩余的股票数量");
+            result = new Result(Result.ResultCode.FAIL_CODE, "超出用所所剩余的股票数量");
         }
 
         return result;

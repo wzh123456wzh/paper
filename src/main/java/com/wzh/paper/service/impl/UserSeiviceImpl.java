@@ -32,7 +32,7 @@ public class UserSeiviceImpl implements UserService{
         User oldUser = userDAO.getUserByName(user.getNickname());
         Result result;
         if(oldUser != null){
-            return new Result<User>(Result.FAIL_CODE, "昵称已存在");
+            return new Result<User>(Result.ResultCode.FAIL_CODE, "昵称已存在");
         }
         try {
             //对存入数据库的秘密加密
@@ -44,12 +44,12 @@ public class UserSeiviceImpl implements UserService{
             String base64 = be.encode(md5);
             user.setPassword(base64);
             userDAO.register(user);
-            result = new Result(Result.SUCCESS_CODE, "注册成功");
+            result = new Result(Result.ResultCode.SUCCESS_CODE, "注册成功");
         } catch (NoSuchAlgorithmException e){
-            result = new Result(Result.FAIL_CODE, "注册失败");
+            result = new Result(Result.ResultCode.FAIL_CODE, "注册失败");
             e.printStackTrace();
         } catch (Exception e) {
-            result = new Result(Result.FAIL_CODE, "注册失败");
+            result = new Result(Result.ResultCode.FAIL_CODE, "注册失败");
             e.printStackTrace();
         }
         return result;
@@ -76,13 +76,13 @@ public class UserSeiviceImpl implements UserService{
                     loginUser.setToken(token);
                     TokenData tokenData = userDAO.getTokenData(loginUser.getUserId());
 //                    JedisUtil.setTokenData(token, tokenData);
-                    result = new Result(Result.SUCCESS_CODE, "登录成功", loginUser);
+                    result = new Result(Result.ResultCode.SUCCESS_CODE, "登录成功", loginUser);
                 } else {
                     result = new Result(0, "密码错误");
                 }
             }
         } catch (NoSuchAlgorithmException e) {
-            result = new Result(Result.FAIL_CODE, "登录失败");
+            result = new Result(Result.ResultCode.FAIL_CODE, "登录失败");
             e.printStackTrace();
         }
         return result;

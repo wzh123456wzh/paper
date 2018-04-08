@@ -26,7 +26,7 @@ public class MenuController {
     public Result saveMenu(@RequestBody Menu menu){
         Result result;
         if(menu.getMenuName().length() > 50){
-            result = new Result(Result.FAIL_CODE, "菜单名称不能大于50个字符");
+            result = new Result(Result.ResultCode.FAIL_CODE, "菜单名称不能大于50个字符");
         }
         return menuService.saveMenu(menu);
     }
