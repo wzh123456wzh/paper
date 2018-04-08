@@ -37,8 +37,8 @@ public class ResultAspect {
 
     @AfterReturning(returning="result", pointcut = "saveMethod()")
     public void doAccessSave(JoinPoint joinPoint, Result result) {
-        if(result != null && result.getCode() != Result.SAVE_FAIL_CODE){
-            result.setCode(Result.SAVE_SUCCESS_CODE);
+        if(result != null && result.getCode() != Result.ResultCode.SAVE_FAIL_CODE){
+            result.setCode(Result.ResultCode.SAVE_SUCCESS_CODE);
             result.setMsg("添加成功");
         }
     }
@@ -49,7 +49,7 @@ public class ResultAspect {
         try{
             result = (Result) pjp.proceed();
         } catch (Throwable e){
-            result = new Result(Result.SAVE_FAIL_CODE, "添加失败");
+            result = new Result(Result.ResultCode.SAVE_FAIL_CODE, "添加失败");
             e.printStackTrace();
         }
         return result;
@@ -57,11 +57,11 @@ public class ResultAspect {
 
     @AfterReturning(returning="result", pointcut = "selectMethod()")
     public void doAccessSelect(JoinPoint joinPoint, Result result) {
-        if(result.getData() != null && result.getCode() != Result.SELECT_FAIL_CODE){
-            result.setCode(Result.SELECT_SUCCESS_CODE);
+        if(result.getData() != null && result.getCode() != Result.ResultCode.SELECT_FAIL_CODE){
+            result.setCode(Result.ResultCode.SELECT_SUCCESS_CODE);
             result.setMsg("查询成功");
-        } else if(result.getCode() != Result.SELECT_FAIL_CODE){
-            result.setCode(Result.EMPTY_CODE);
+        } else if(result.getCode() != Result.ResultCode.SELECT_FAIL_CODE){
+            result.setCode(Result.ResultCode.EMPTY_CODE);
             result.setMsg("没有数据");
         }
     }
@@ -72,7 +72,7 @@ public class ResultAspect {
         try{
             result = (Result) pjp.proceed();
         } catch (Throwable e){
-            result = new Result(Result.SELECT_FAIL_CODE, "查询失败");
+            result = new Result(Result.ResultCode.SELECT_FAIL_CODE, "查询失败");
             e.printStackTrace();
         }
         return result;
@@ -80,8 +80,8 @@ public class ResultAspect {
 
     @AfterReturning(returning="result", pointcut = "updateMethod()")
     public void doAccessUpdate(JoinPoint joinPoint, Result result) {
-        if(result != null && result.getCode() != Result.UPDATE_FAIL_CODE){
-            result.setCode(Result.UPDATE_SUCCESS_CODE);
+        if(result != null && result.getCode() != Result.ResultCode.UPDATE_FAIL_CODE){
+            result.setCode(Result.ResultCode.UPDATE_SUCCESS_CODE);
             result.setMsg("更新成功");
         }
     }
@@ -92,7 +92,7 @@ public class ResultAspect {
         try{
             result = (Result) pjp.proceed();
         } catch (Throwable e){
-            result = new Result(Result.UPDATE_FAIL_CODE, "更新失败");
+            result = new Result(Result.ResultCode.UPDATE_FAIL_CODE, "更新失败");
             e.printStackTrace();
         }
         return result;
@@ -100,8 +100,8 @@ public class ResultAspect {
 
     @AfterReturning(returning="result", pointcut = "removeMethod()")
     public void doAccessRemove(JoinPoint joinPoint, Result result) {
-        if(result != null && result.getCode() != Result.REMOVEAIL_CODE){
-            result.setCode(Result.REMOVE_SUCCESS_CODE);
+        if(result != null && result.getCode() != Result.ResultCode.REMOVEAIL_CODE){
+            result.setCode(Result.ResultCode.REMOVE_SUCCESS_CODE);
             result.setMsg("删除成功");
         }
     }
@@ -112,7 +112,7 @@ public class ResultAspect {
         try{
             result = (Result) pjp.proceed();
         } catch (Throwable e){
-            result = new Result(Result.REMOVEAIL_CODE, "删除失败");
+            result = new Result(Result.ResultCode.REMOVEAIL_CODE, "删除失败");
             e.printStackTrace();
         }
         return result;
