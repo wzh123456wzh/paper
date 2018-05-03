@@ -11,6 +11,9 @@ public class User {
     private Date updateDate;
     private String token;
     private List<Role> roles;
+    private Double asset;
+    private Double capital;
+    private Double currentCash;
 
     public long getUserId() {
         return userId;
@@ -66,5 +69,33 @@ public class User {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public Double getAsset() {
+        return asset;
+    }
+
+    public void setAsset(Double asset) {
+        this.asset = asset;
+    }
+
+    public Double getCapital() {
+        return capital;
+    }
+
+    public void setCapital(Double capital) {
+        this.capital = capital;
+    }
+
+    public Double getCurrentCash() {
+        return currentCash;
+    }
+
+    public void setCurrentCash(Double currentCash) {
+        this.currentCash = currentCash;
     }
 }

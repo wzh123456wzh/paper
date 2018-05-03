@@ -9,23 +9,23 @@
   <url>http://maven.apache.org</url>
 
   <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+  <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-    <!-- spring版本号 -->
-    <spring.version>4.2.5.RELEASE</spring.version>
+  <!-- spring版本号 -->
+  <spring.version>4.2.5.RELEASE</spring.version>
 
-    <!-- mybatis版本号 -->
-    <mybatis.version>3.2.8</mybatis.version>
+  <!-- mybatis版本号 -->
+  <mybatis.version>3.2.8</mybatis.version>
 
-    <!-- mysql驱动版本号 -->
-    <mysql-driver.version>5.1.29</mysql-driver.version>
+  <!-- mysql驱动版本号 -->
+  <mysql-driver.version>5.1.29</mysql-driver.version>
 
-    <!-- log4j日志包版本号 -->
-    <slf4j.version>1.7.18</slf4j.version>
-    <log4j.version>1.2.17</log4j.version>
+  <!-- log4j日志包版本号 -->
+  <slf4j.version>1.7.18</slf4j.version>
+  <log4j.version>1.2.17</log4j.version>
 
-  </properties>
+</properties>
 
 
   <dependencies>
@@ -234,6 +234,7 @@
       </exclusions>
     </dependency>
   </dependencies>
+  
 
   <build>
     <finalName>paper</finalName>

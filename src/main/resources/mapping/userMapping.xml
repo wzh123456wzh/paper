@@ -8,7 +8,18 @@
     </select>
 
     <select id="getUserByName" resultType="User">
-        select user_id, nickname, update_date, create_date from user where nickname = #{nickname}
+        SELECT
+            u.user_id,
+            u.nickname,
+            u.update_date,
+            u.create_date,
+            ua.asset,
+            ua.capital,
+            ua.current_cash
+        FROM
+            user u LEFT JOIN user_account ua on u.user_id = ua.user_id
+        WHERE
+            nickname = #{nickname}
     </select>
 
     <insert id="register">

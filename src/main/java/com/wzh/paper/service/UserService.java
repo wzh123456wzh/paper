@@ -18,5 +18,5 @@ public interface UserService {
 
     Result<User> listUsersByRoleSelect(long roleId, boolean flag);
 
-    Result<User> getUserInfoSelect(User user);
+    Result<User> getUserInfoSelect(String nickname);
 }

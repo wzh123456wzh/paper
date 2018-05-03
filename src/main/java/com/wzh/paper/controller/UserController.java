@@ -65,8 +65,8 @@ public class UserController {
 
     //根据用户名查询用户详细信息
     @ResponseBody
-    @RequestMapping(value = "/getUserInfo", method = RequestMethod.POST)
-    public Result<User> getUserInfoSelect(@RequestBody User user){
-        return userService.getUserInfoSelect(user);
+    @RequestMapping(value = "/getUserInfo/{nickname}", method = RequestMethod.GET)
+    public Result<User> getUserInfoSelect(@PathVariable("nickname") String nickname){
+        return userService.getUserInfoSelect(nickname);
     }
 }

@@ -23,19 +23,12 @@ public class StockServiceImpl implements StockService {
 
     @Override
     public Result<PageInfo<List<StockInfo>>> listStockInfoSelect(StockDTO dto) {
-//        Result<PageInfo<List<StockInfo>>> result;
         dto.setPageNum(dto.getPageNum() == null ? 1 : dto.getPageNum());
         dto.setPageSize(dto.getPageSize() == null ? 10 : dto.getPageSize());
-//        try {
         PageHelper.startPage(dto.getPageNum(),
                 dto.getPageSize(), true);
         List<StockInfo> stockInfoList = stockDAO.listStockInfo(dto);
         PageInfo<List<StockInfo>> pageInfo = new PageInfo(stockInfoList);
-//            result = new Result<>(Result.getSuccessCode(), "数据查询成功", pageInfo);
-//        } catch (Exception e) {
-//            result = new Result<>(Result.getFailCode(), "数据查询失败");
-//            e.printStackTrace();
-//        }
         return new Result(pageInfo);
     }
 
@@ -78,12 +71,9 @@ public class StockServiceImpl implements StockService {
         return new Result(stockInfoList);
     }
 
-    @Transactional
     @Override
     public Result saveBuyStock(StockDTO stockDTO) {
         Result result;
-//        try {
-        //检查金额最多能购买多少股
         int money = stockDAO.getUserMoney(stockDTO);
         int count = (int) (money / stockDTO.getLastTrade());
         if(count > stockDTO.getStockNum()){
@@ -97,11 +87,6 @@ public class StockServiceImpl implements StockService {
         } else {
             result = new Result(Result.ResultCode.FAIL_CODE, "账户余额不足");
         }
-//            result = new Result<>(Result.getSuccessCode(), "购买股票成功");
-//        } catch (Exception e) {
-//            result = new Result<>(Result.getFailCode(), "购买股票失败");
-//            e.printStackTrace();
-//        }
         return result;
     }
 
