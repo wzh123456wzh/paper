@@ -14,15 +14,15 @@ import javax.annotation.Resource;
 @RequestMapping("/sender")
 public class SenderController {
 
-    @Resource
-    private SendMessageService sendMessageService;
-
-    @RequestMapping(value = "/sendMessage", method = RequestMethod.POST)
-    public Result sendMessage(@RequestBody Chat chat){
-
-        sendMessageService.send(chat.getSender(), chat.getReceiver(), chat.getMsg());
-
-        return new Result(Result.ResultCode.SUCCESS_CODE, "成功");
-    }
+//    @Resource
+//    private SendMessageService sendMessageService;
+//
+//    @RequestMapping(value = "/sendMessage", method = RequestMethod.POST)
+//    public Result sendMessage(@RequestBody Chat chat){
+//
+//        sendMessageService.send(chat.getSender(), chat.getReceiver(), chat.getMsg());
+//
+//        return new Result(Result.ResultCode.SUCCESS_CODE, "成功");
+//    }
 
 }

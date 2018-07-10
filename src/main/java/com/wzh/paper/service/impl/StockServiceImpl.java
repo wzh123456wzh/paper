@@ -115,7 +115,7 @@ public class StockServiceImpl implements StockService {
     @Override
     public Result<List<StockInfo>> listAttentionStockSelect(StockDTO dto) {
         List<StockInfo> stockInfos = stockDAO.listAttentionStockSelect(dto);
-        return new Result<>(stockInfos);
+        return new Result<  >(stockInfos);
     }
 
     @Override

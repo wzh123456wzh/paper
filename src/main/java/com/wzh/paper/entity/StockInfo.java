@@ -8,7 +8,7 @@ public class StockInfo {
     private Double lastTrade;        	 //最新价,
     private Double chg;               	 //涨跌幅,
     private Double stockChange;                //涨跌额,
-    private Double fiveMinCg;      	 //5分钟涨跌幅,
+    private Double fiveMinCg;          	 //5分钟涨跌幅,
     private Double volume;            	 //成交量(手),
     private Double turnover;          	 //成交额（万元),
     private Double turnoverRate;     	 //换手率,
