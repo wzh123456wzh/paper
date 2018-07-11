@@ -363,31 +363,6 @@
           </includes>
         </configuration>
       </plugin>
-      <!--打包插件，这个功能很强大，具体可以网上搜一下-->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <version>2.4</version>
-        <!-- The configuration of the plugin -->
-        <configuration>
-          <!-- Specifies the configuration file of the assembly plugin -->
-          <descriptors>
-            <descriptor>package.xml</descriptor>
-          </descriptors>
-          <!--<descriptorRefs>
-               <descriptorRef>jar-with-dependencies</descriptorRef>依赖包和源码打成一个jar文件
-           </descriptorRefs>-->
-        </configuration>
-        <executions>
-          <execution>
-            <id>make-assembly</id>
-            <phase>package</phase>
-            <goals>
-              <goal>single</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
     </plugins>
 
   </build>
