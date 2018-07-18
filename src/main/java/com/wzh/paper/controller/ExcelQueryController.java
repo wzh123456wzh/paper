@@ -1,10 +1,12 @@
 package com.wzh.paper.controller;
 
 import com.wzh.paper.entity.Result;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.commons.io.FileUtils;
+import org.apache.poi.ss.usermodel.*;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import java.io.File;
+import java.io.*;
 import java.util.Date;
 
 /**
@@ -28,23 +30,25 @@ public class ExcelQueryController {
 
     @ResponseBody
     @RequestMapping(value = "/listUserAndProjects", method = RequestMethod.POST)
-    public Result listUserAndProjects(@RequestParam(value = "file", required = false) MultipartFile mfile,
+    public String listUserAndProjects(@RequestParam(value = "file", required = false) MultipartFile mfile,
                                       @RequestParam(value = "name", required = false) String name) {
         Result<String> result = new Result<>();
         try {
             String str = queryNameAndProject(mfile, name);
-            result.setMsg("成功了");
-            result.setData(str);
+            String fileName=new String("快说你爱我.txt".getBytes("UTF-8"));//为了解决中文名称乱码问题
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentDispositionFormData("attachment", fileName);
+            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+            return str;
         } catch (Exception e) {
-            result.setMsg("程序运行错误啦，快点找你老公解决");
             e.printStackTrace();
         }
-
-        return result;
+        return null;
     }
 
 
     public String queryNameAndProject(MultipartFile mfile, String name) throws Exception {
+        File output = new File(new Date().getTime() + "快说你爱我.txt");
         CommonsMultipartFile cf= (CommonsMultipartFile)mfile;
         File file = new File(new Date().getTime() + "excel.xlsx");
         cf.getFileItem().write(file);
@@ -56,27 +60,56 @@ public class ExcelQueryController {
         // 遍历工作表
         try {
             while(true){
+                if(num == 100){
+                    System.out.println(100);
+                }
+                if(num == 200){
+                    System.out.println(200);
+                }
+                if(num == 300){
+                    System.out.println(300);
+                }
+                if(num == 400){
+                    System.out.println(400);
+                }
+                if(num == 500){
+                    System.out.println(500);
+                }
                 int colName = -1;
                 int colProject = -1;
                 Sheet sheet = workbook.getSheetAt(num++);
                 String sheetName = sheet.getSheetName();
+                System.out.println("正在扫描第" + num + "个表  表名:" + sheetName);
                 //获取当前工作表行数
                 int rows = sheet.getLastRowNum() + 1;
                 //获取当前姓名在第几列
                 for(i = 0; i < rows; i++){
                     Row row = sheet.getRow(i);
+                    if(row == null){
+                        continue;
+                    }
                     int cols = row.getPhysicalNumberOfCells();
-                    String frontRow = row.getCell(0).getStringCellValue();
+                    Cell cell = row.getCell(0);
+                    if(cell == null){
+                        continue;
+                    }
+                    String frontRow = cell.getStringCellValue();
                     if(StringUtils.isEmpty(frontRow) || frontRow.contains("表")){
                         continue;
                     }
                     if(cols >= 3){
                         for(int j = 0; j < cols; j++){
-                            String stringCellValue = row.getCell(j).getStringCellValue();
+                            String stringCellValue = null;
+                            try {
+                                stringCellValue = row.getCell(j).getStringCellValue();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                continue;
+                            }
                             if(stringCellValue.contains("项目")){
                                 colProject = j;
                             }
-                            if(stringCellValue.contains("股东名称") || stringCellValue.contains("股东姓名") || stringCellValue.equals("股东")){
+                            if(stringCellValue.contains("股东名称") || stringCellValue.contains("股东姓名") || stringCellValue.equals("股东") ||stringCellValue.equals("姓名")){
                                 colName = j;
                             }
 
@@ -84,20 +117,33 @@ public class ExcelQueryController {
                         break;
                     }
                 }
+                if(colName == -1){
+                    continue;
+                }
                 for(i = i + 1; i < rows; i++){
+                    Row row = sheet.getRow(i);
+                    if(row == null){
+                        continue;
+                    }
+                    Cell cell = row.getCell(colName);
+                    if(cell == null){
+                        continue;
+                    }
                     if(colProject == -1){
-                        Row row = sheet.getRow(i);
-                        String stockHolder = row.getCell(colName).getStringCellValue();
+                        String stockHolder = cell.getStringCellValue();
                         if(stockHolder.equals(name)){
-                            stringBuilder.append(sheetName + ",");
+                            stringBuilder.append("工作表：" + sheetName + "--项目名:" +  sheetName + System.getProperty("line.separator"));
+//                            bw.write("工作表：" + sheetName + "--项目名:" +  sheetName + System.getProperty("line.separator"));
+//                            bw.flush();
                             break;
                         }
                     } else {
-                        Row row = sheet.getRow(i);
-                        String stockHolder = row.getCell(colName).getStringCellValue();
+                        String stockHolder = cell.getStringCellValue();
                         if(stockHolder.equals(name)){
                             String projectName = row.getCell(colProject).getStringCellValue();
-                            stringBuilder.append(projectName + ",");
+                            stringBuilder.append("工作表：" + sheetName + "--项目名:" +  projectName + System.getProperty("line.separator"));
+//                            bw.write("工作表：" + sheetName + "--项目名:" +  projectName + System.getProperty("line.separator"));
+//                            bw.flush();
                             break;
                         }
                     }
