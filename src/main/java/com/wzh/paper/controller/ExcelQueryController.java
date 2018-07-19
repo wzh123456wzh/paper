@@ -93,7 +93,7 @@ public class ExcelQueryController {
                             if(stringCellValue.contains("项目")){
                                 colProject = j;
                             }
-                            if(stringCellValue.contains("股东名称") || stringCellValue.contains("股东姓名") || stringCellValue.equals("股东") ||stringCellValue.equals("姓名")){
+                            if(stringCellValue.contains("股东名称") || stringCellValue.contains("股东姓名") || stringCellValue.contains("投资者") || stringCellValue.equals("股东") ||stringCellValue.equals("姓名")){
                                 colName = j;
                             }
 
