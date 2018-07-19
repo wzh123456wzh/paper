@@ -132,7 +132,7 @@ public class ExcelQueryController {
                     if(colProject == -1){
                         String stockHolder = cell.getStringCellValue();
                         if(stockHolder.equals(name)){
-                            stringBuilder.append("工作表：" + sheetName + "--项目名:" +  sheetName + System.getProperty("line.separator"));
+                            stringBuilder.append("工作表：" + sheetName + "--项目名:" +  sheetName + "<br>");
 //                            bw.write("工作表：" + sheetName + "--项目名:" +  sheetName + System.getProperty("line.separator"));
 //                            bw.flush();
                             break;
@@ -141,7 +141,7 @@ public class ExcelQueryController {
                         String stockHolder = cell.getStringCellValue();
                         if(stockHolder.equals(name)){
                             String projectName = row.getCell(colProject).getStringCellValue();
-                            stringBuilder.append("工作表：" + sheetName + "--项目名:" +  projectName + System.getProperty("line.separator"));
+                            stringBuilder.append("工作表：" + sheetName + "--项目名:" +  projectName + "<br>");
 //                            bw.write("工作表：" + sheetName + "--项目名:" +  projectName + System.getProperty("line.separator"));
 //                            bw.flush();
                             break;
