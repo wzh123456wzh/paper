@@ -35,10 +35,6 @@ public class ExcelQueryController {
         Result<String> result = new Result<>();
         try {
             String str = queryNameAndProject(mfile, name);
-            String fileName=new String("快说你爱我.txt".getBytes("UTF-8"));//为了解决中文名称乱码问题
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentDispositionFormData("attachment", fileName);
-            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
             return str;
         } catch (Exception e) {
             e.printStackTrace();
@@ -48,7 +44,6 @@ public class ExcelQueryController {
 
 
     public String queryNameAndProject(MultipartFile mfile, String name) throws Exception {
-        File output = new File(new Date().getTime() + "快说你爱我.txt");
         CommonsMultipartFile cf= (CommonsMultipartFile)mfile;
         File file = new File(new Date().getTime() + "excel.xlsx");
         cf.getFileItem().write(file);
@@ -60,21 +55,6 @@ public class ExcelQueryController {
         // 遍历工作表
         try {
             while(true){
-                if(num == 100){
-                    System.out.println(100);
-                }
-                if(num == 200){
-                    System.out.println(200);
-                }
-                if(num == 300){
-                    System.out.println(300);
-                }
-                if(num == 400){
-                    System.out.println(400);
-                }
-                if(num == 500){
-                    System.out.println(500);
-                }
                 int colName = -1;
                 int colProject = -1;
                 Sheet sheet = workbook.getSheetAt(num++);
@@ -101,7 +81,11 @@ public class ExcelQueryController {
                         for(int j = 0; j < cols; j++){
                             String stringCellValue = null;
                             try {
-                                stringCellValue = row.getCell(j).getStringCellValue();
+                                Cell cell1 = row.getCell(j);
+                                if(cell1 == null){
+                                    continue;
+                                }
+                                stringCellValue = cell1.getStringCellValue();
                             } catch (Exception e) {
                                 e.printStackTrace();
                                 continue;
@@ -130,7 +114,13 @@ public class ExcelQueryController {
                         continue;
                     }
                     if(colProject == -1){
-                        String stockHolder = cell.getStringCellValue();
+                        String stockHolder = null;
+                        try {
+                            stockHolder = cell.getStringCellValue();
+                        } catch (IllegalStateException e) {
+                            e.printStackTrace();
+                            continue;
+                        }
                         if(stockHolder.equals(name)){
                             stringBuilder.append("工作表：" + sheetName + "--项目名:" +  sheetName + "<br>");
 //                            bw.write("工作表：" + sheetName + "--项目名:" +  sheetName + System.getProperty("line.separator"));
@@ -139,6 +129,12 @@ public class ExcelQueryController {
                         }
                     } else {
                         String stockHolder = cell.getStringCellValue();
+                        try {
+                            stockHolder = cell.getStringCellValue();
+                        } catch (IllegalStateException e) {
+                            e.printStackTrace();
+                            continue;
+                        }
                         if(stockHolder.equals(name)){
                             String projectName = row.getCell(colProject).getStringCellValue();
                             stringBuilder.append("工作表：" + sheetName + "--项目名:" +  projectName + "<br>");
