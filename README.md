@@ -9,5 +9,6 @@ conflict1
 test master
 test tmp
 
-branch commit test1
-branch commit test2
+branch test commit test1
+branch test commit test2
+branch test commit test3
