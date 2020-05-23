@@ -8,3 +8,6 @@ conflict1
 
 test master
 test tmp
+
+branch master commit test1
+
