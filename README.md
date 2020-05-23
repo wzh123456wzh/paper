@@ -10,4 +10,5 @@ test master
 test tmp
 
 branch master commit test1
+branch master commit test2
 
