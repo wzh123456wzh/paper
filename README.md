@@ -12,3 +12,7 @@ test tmp
 branch master commit test1
 branch master commit test2
 
+branch test commit test1
+branch test commit test2
+branch test commit test3
+branch test commit test4
