@@ -12,3 +12,4 @@ test tmp
 branch test commit test1
 branch test commit test2
 branch test commit test3
+branch test commit test4
